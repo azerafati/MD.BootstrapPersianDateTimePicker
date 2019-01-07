@@ -1,13 +1,14 @@
-﻿﻿/*
+﻿/*
  * Bootstrap 4+ Persian Date Time Picker jQuery Plugin
  * version : 3.3.5
- * https://github.com/Mds92/MD.BootstrapPersianDateTimePicker
+ * https://github.com/azerafati/az.BootstrapPersianDateTimePicker
+ * Originally forked from https://github.com/Mds92/MD.BootstrapPersianDateTimePicker By Mohammad Dayyan
  *
  *
- * Written By Mohammad Dayyan, Mordad 1397
- * mds.soft@gmail.com - @mdssoft
+ * By Alireza Zerafati
+ * azerafati@gmail.com
+ * azerafati.com
  *
- * My weblog: mds-soft.persianblog.ir
  */
 
 
@@ -190,8 +191,7 @@
     <div class="popover-body p-0" data-name="mds-datetimepicker-popoverbody"></div>
 </div>`;
 
-    var dateTimePickerHtmlTemplate = `
-<div class="mds-bootstrap-persian-datetime-picker-container {{rtlCssClass}}" ${mdDatePickerContainerFlag}>
+    var dateTimePickerHtmlTemplate = `<div class="mds-bootstrap-persian-datetime-picker-container {{rtlCssClass}}" ${mdDatePickerContainerFlag}>
     <div class="select-year-box w-0">
         <div class="container-fluid">
             <div class="row">
@@ -201,125 +201,124 @@
     </div>
     <table class="table table-sm text-center p-0 m-0">
         <thead>
-            <tr {{selectedDateStringAttribute}}>
-                <th colspan="100" data-selecteddatestring>{{selectedDateString}}</th>
-            </tr>            
+        <tr {{selectedDateStringAttribute}}>
+            <th colspan="100" data-selecteddatestring>{{selectedDateString}}</th>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                {{monthsTdHtml}}
-            </tr>
+        <tr>
+            {{monthsTdHtml}}
+        </tr>
         </tbody>
         <tfoot>
-            <tr {{timePickerAttribute}}>
-                <td colspan="100" class="border-0">
-                    <table class="table table-sm table-borderless">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text" title="{{hourText}}" value="{{hour}}" maxlength="2" data-clock="hour" />
-                                </td>
-                                <td>:</td>
-                                <td>
-                                    <input type="text" title="{{minuteText}}" value="{{minute}}" maxlength="2" data-clock="minute" />
-                                </td>
-                                <td>:</td>
-                                <td>
-                                    <input type="text" title="{{secondText}}" value="{{second}}" maxlength="2" data-clock="second" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="100">
-                    <button type="button" class="btn btn-light" title="{{goTodayText}}" data-go-today>{{todayDateString}}</button>
-                </td>
-            </tr>
+        <tr {{timePickerAttribute}}>
+            <td colspan="100" class="border-0">
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="number" title="{{hourText}}" value="{{hour}}" maxlength="2" data-clock="hour"/>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" title="{{minuteText}}" value="{{minute}}" maxlength="2" data-clock="minute"/>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" title="{{secondText}}" value="{{second}}" maxlength="2" data-clock="second"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100">
+                <button type="button" class="btn btn-light" title="{{goTodayText}}" data-go-today>{{todayDateString}}</button>
+            </td>
+        </tr>
         </tfoot>
     </table>
 </div>`;
 
-    var dateTimePickerMonthTableHtmlTemplate = `
-<td class="border-0" style="{{monthTdStyle}}" {{monthTdAttribute}} data-td-month>
-	<table class="table table-sm table-striped table-borderless">
-		<thead>
-			<tr {{monthNameAttribute}}>
-				<th colspan="100" class="border-0">
-					<table class="table table-sm table-borderless">
-						<thead>
-							<tr>
-								<th>
-									<button type="button" class="btn btn-light"> {{currentMonthInfo}} </button>
-								</th>
-							</tr>
-						</thead>
-					</table>
-				</th>
-			</tr>
-			<tr {{theadSelectDateButtonTrAttribute}}>
-                <td colspan="100" class="border-0">
-                    <table class="table table-sm table-borderless">
-                        <tr>
-                            <th>
-                                <button type="button" class="btn btn-light btn-sm" title="{{previousYearText}}" data-changedatebutton data-number="{{previousYearButtonDateNumber}}" {{previousYearButtonDisabledAttribute}}> &lt;&lt; </button>
-                            </th>
-                            <th>
-                                <button type="button" class="btn btn-light btn-sm" title="{{previousMonthText}}" data-changedatebutton data-number="{{previousMonthButtonDateNumber}}" {{previousMonthButtonDisabledAttribute}}> &lt; </button>
-                            </th>
-                            <th style="width: 120px;">
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-light btn-sm dropdown-toggle" id="mdsBootstrapPersianDatetimePickerMonthSelectorButon"
+    var dateTimePickerMonthTableHtmlTemplate = `<td class="border-0" style="{{monthTdStyle}}" {{monthTdAttribute}} data-td-month>
+    <table class="table table-sm table-striped table-borderless">
+        <thead>
+        <tr {{monthNameAttribute}}>
+            <th colspan="100" class="border-0">
+                <table class="table table-sm table-borderless">
+                    <thead>
+                    <tr>
+                        <th>
+                            <button type="button" class="btn btn-light"> {{currentMonthInfo}}</button>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </th>
+        </tr>
+        <tr {{theadSelectDateButtonTrAttribute}}>
+            <td colspan="100" class="border-0">
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{previousYearText}}" data-changedatebutton data-number="{{previousYearButtonDateNumber}}" {{previousYearButtonDisabledAttribute}}> &lt;&lt;</button>
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{previousMonthText}}" data-changedatebutton data-number="{{previousMonthButtonDateNumber}}" {{previousMonthButtonDisabledAttribute}}> &lt;</button>
+                        </th>
+                        <th style="width: 120px;">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-light btn-sm dropdown-toggle" id="mdsBootstrapPersianDatetimePickerMonthSelectorButon"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{selectedMonthName}}
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="mdsBootstrapPersianDatetimePickerMonthSelectorButon">
-                                        <a class="dropdown-item {{selectMonth1ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth1DateNumber}}">{{monthName1}}</a>
-                                        <a class="dropdown-item {{selectMonth2ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth2DateNumber}}">{{monthName2}}</a>
-                                        <a class="dropdown-item {{selectMonth3ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth3DateNumber}}">{{monthName3}}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item {{selectMonth4ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth4DateNumber}}">{{monthName4}}</a>
-                                        <a class="dropdown-item {{selectMonth5ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth5DateNumber}}">{{monthName5}}</a>
-                                        <a class="dropdown-item {{selectMonth6ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth6DateNumber}}">{{monthName6}}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item {{selectMonth7ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth7DateNumber}}">{{monthName7}}</a>
-                                        <a class="dropdown-item {{selectMonth8ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth8DateNumber}}">{{monthName8}}</a>
-                                        <a class="dropdown-item {{selectMonth9ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth9DateNumber}}">{{monthName9}}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item {{selectMonth10ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth10DateNumber}}">{{monthName10}}</a>
-                                        <a class="dropdown-item {{selectMonth11ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth11DateNumber}}">{{monthName11}}</a>
-                                        <a class="dropdown-item {{selectMonth12ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth12DateNumber}}">{{monthName12}}</a>
-                                    </div>
+                                    {{selectedMonthName}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="mdsBootstrapPersianDatetimePickerMonthSelectorButon">
+                                    <a class="dropdown-item {{selectMonth1ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth1DateNumber}}">{{monthName1}}</a>
+                                    <a class="dropdown-item {{selectMonth2ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth2DateNumber}}">{{monthName2}}</a>
+                                    <a class="dropdown-item {{selectMonth3ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth3DateNumber}}">{{monthName3}}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item {{selectMonth4ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth4DateNumber}}">{{monthName4}}</a>
+                                    <a class="dropdown-item {{selectMonth5ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth5DateNumber}}">{{monthName5}}</a>
+                                    <a class="dropdown-item {{selectMonth6ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth6DateNumber}}">{{monthName6}}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item {{selectMonth7ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth7DateNumber}}">{{monthName7}}</a>
+                                    <a class="dropdown-item {{selectMonth8ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth8DateNumber}}">{{monthName8}}</a>
+                                    <a class="dropdown-item {{selectMonth9ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth9DateNumber}}">{{monthName9}}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item {{selectMonth10ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth10DateNumber}}">{{monthName10}}</a>
+                                    <a class="dropdown-item {{selectMonth11ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth11DateNumber}}">{{monthName11}}</a>
+                                    <a class="dropdown-item {{selectMonth12ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth12DateNumber}}">{{monthName12}}</a>
                                 </div>
-                            </th>
-                            <th style="width: 50px;">
-                                <button type="button" class="btn btn-light btn-sm" select-year-button {{selectYearButtonDisabledAttribute}}>{{selectedYear}}</button>
-                            </th>
-                            <th>
-                                <button type="button" class="btn btn-light btn-sm" title="{{nextMonthText}}" data-changedatebutton data-number="{{nextMonthButtonDateNumber}}" {{nextMonthButtonDisabledAttribute}}> &gt; </button>
-                            </th>
-                            <th>
-                                <button type="button" class="btn btn-light btn-sm" title="{{nextYearText}}" data-changedatebutton data-number="{{nextYearButtonDateNumber}}" {{nextYearButtonDisabledAttribute}}> &gt;&gt; </button>
-                            </th>
-                        </tr>
-                    </table>
-                </td>
-			</tr>
-		</thead>
-		<tbody class="days">
-            <tr>
-                <td class="{{weekDayShortName1CssClass}}">{{weekDayShortName1}}</td>
-                <td>{{weekDayShortName2}}</td>
-                <td>{{weekDayShortName3}}</td>
-                <td>{{weekDayShortName4}}</td>
-                <td>{{weekDayShortName5}}</td>
-                <td>{{weekDayShortName6}}</td>
-                <td class="{{weekDayShortName7CssClass}}">{{weekDayShortName7}}</td>
-            </tr>
+                            </div>
+                        </th>
+                        <th style="width: 50px;">
+                            <button type="button" class="btn btn-light btn-sm" select-year-button {{selectYearButtonDisabledAttribute}}>{{selectedYear}}</button>
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{nextMonthText}}" data-changedatebutton data-number="{{nextMonthButtonDateNumber}}" {{nextMonthButtonDisabledAttribute}}> &gt;</button>
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{nextYearText}}" data-changedatebutton data-number="{{nextYearButtonDateNumber}}" {{nextYearButtonDisabledAttribute}}> &gt;&gt;</button>
+                        </th>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </thead>
+        <tbody class="days">
+        <tr>
+            <td class="{{weekDayShortName1CssClass}}">{{weekDayShortName1}}</td>
+            <td>{{weekDayShortName2}}</td>
+            <td>{{weekDayShortName3}}</td>
+            <td>{{weekDayShortName4}}</td>
+            <td>{{weekDayShortName5}}</td>
+            <td>{{weekDayShortName6}}</td>
+            <td class="{{weekDayShortName7CssClass}}">{{weekDayShortName7}}</td>
+        </tr>
         {{daysHtml}}
-		</tbody>
-	</table>
+        </tbody>
+    </table>
 </td>
     `;
 
@@ -479,7 +478,7 @@
                     break;
             }
         }
-        var $targetDate = $(setting.targetDateSelector);
+        var $targetDate = setting.targetDateSelector;
         if ($targetDate.length > 0) {
             switch ($targetDate[0].tagName.toLowerCase()) {
                 case 'input':
@@ -1733,11 +1732,11 @@
                         disableAfterDate: undefined,
                         rangeSelector: false,
                         rangeSelectorStartDate: undefined,
-                        rangeSelectorEndDate: undefined                        
+                        rangeSelectorEndDate: undefined
                     }, options);
                 $this.attr(mdDatePickerFlag, '');
                 if (setting.targetDateSelector) {
-                    var targetValue = $(setting.targetDateSelector).val();
+                    var targetValue = setting.targetDateSelector.val();
                     if (targetValue) {
                         setting.selectedDate = new Date(Date.parse(targetValue));
                         setting.selectedDateToShow = getClonedDate(setting.selectedDate);
@@ -1802,7 +1801,7 @@
                         }, 10);
                     });
                 }
-                $(document).on('change', setting.targetTextSelector, function () {                    
+                setting.targetTextSelector && setting.targetTextSelector.on('change', function () {
                     if (triggerChangeCalling) {
                         setTimeout(function(){
                             triggerChangeCalling = false;

@@ -1,43 +1,43 @@
 {
-  "name": "md.bootstrappersiandatetimepicker",
-  "version": "3.3.5",
+  "name": "az.bootstrappersiandatetimepicker",
+  "version": "1.0.0",
   "description": "Persian Date Time Picker with jQuery 3+ & Bootstrap 4+",
   "license": "MIT",
   "moduleResolution": "node",
   "author": {
-    "name": "Mohammad Dayyan",
-    "email": "mds_soft@yahoo.com",
-    "social": "@mdssoft",
-    "url": "https://github.com/Mds92/MD.BootstrapPersianDateTimePicker"
+    "name": "Alireza Zerafati",
+    "email": "azerafati@gmail.com",
+    "social": "@azerafati",
+    "url": "https://github.com/azerafati/az.BootstrapPersianDateTimePicker"
   },
   "repository": {
     "type": "public",
-    "url": "https://github.com/Mds92/MD.BootstrapPersianDateTimePicker"
+    "url": "https://github.com/azerafati/az.BootstrapPersianDateTimePicker"
   },
-  "homepage": "https://github.com/Mds92/MD.BootstrapPersianDateTimePicker",
+  "homepage": "https://github.com/azerafati/az.BootstrapPersianDateTimePicker",
+  "files": [
+    "dist/*"
+  ],
   "dependencies": {
-    "bootstrap": "^4.1.3",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.14.5"
+    "bootstrap": "^4.2.1",
+    "jquery": "^3.3.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.22",
-    "css-loader": "^1.0.1",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "jshint": "^2.9.6",
-    "jshint-loader": "^0.8.4",
-    "mini-css-extract-plugin": "^0.4.4",
-    "style-loader": "^0.23.1",
-    "uglifyjs-webpack-plugin": "^1.3.0",
-    "webpack": "^4.26.0",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "webpack-fix-style-only-entries": "0.0.4",
-    "webpack-merge": "^4.1.4"
+    "browser-sync": "^2.26.3",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.5",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-iife": "^0.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
+    "uglify-es": "^3.3.9"
   },
   "scripts": {
-    "compile": "tsc",
-    "webpack": "webpack",
-    "webpackserver": "webpack-dev-server"
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

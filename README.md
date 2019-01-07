@@ -1,17 +1,19 @@
 # az.BootstrapPersianDateTimePicker
-#### Bootstrap 4+ Persian And Gregorian Date Time Picker jQuery 3+ Plugin
+#### Bootstrap 4+ Persian And Gregorian Date Time Picker jQuery 3+ Plugin + AngularJS Wrapper
 
 Originally forked from 
-![MD.BootstrapPersianDateTimePicker](https://github.com/Mds92/MD.BootstrapPersianDateTimePicker)
+[MD.BootstrapPersianDateTimePicker](https://github.com/Mds92/MD.BootstrapPersianDateTimePicker)
 
 `MD.BootstrapPersianDateTimePicker` uses bootstrap [Popovers](https://getbootstrap.com/docs/4.1/components/popovers/), so it has flexibility of bootstrap's popover.
 <hr>
 
-**NOTE:**
-If you want Bootstrap 3 version see `https://github.com/Mds92/MD.BootstrapPersianDateTimePicker/tree/master-bs3`
-
 ### Installing:
-First you have to install `Bootstrap 4+` and `jQuery 3+` and link them to your html file.
+Dpencies are:
+
+ -`Bootstrap 4+`
+ -`jQuery`
+ -`MomentJS`
+ -`moment-jalaali`
 
 Then you can install latest version of the plugin via npm:
 
@@ -19,15 +21,14 @@ Then you can install latest version of the plugin via npm:
 
 Now add these files to you html:
 ```html
-<link href="/dist/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet"/>
-<script src="/dist/jquery.md.bootstrap.datetimepicker.js"></script>
+<link href="/dist/az.bootstrappersiandatetimepicker.css" rel="stylesheet"/>
+<script src="/dist/az.bootstrappersiandatetimepicker.js"></script>
 ```
-I suggest to add scripts at the end of  `body`  tag and after  `jQuery`  library.
 ### How to use:
 ```javascript
 $('#id').MdPersianDateTimePicker({ 
-  targetTextSelector: '#inputTextDate1',
-  targetDateSelector: '#inputHiddenDate1',
+  targetTextSelector: $('#inputTextDate1'),
+  targetDateSelector: $('#inputHiddenDate1'),
 });
 ```
 

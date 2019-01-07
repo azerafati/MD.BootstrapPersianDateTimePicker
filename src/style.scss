@@ -1,20 +1,10 @@
-/*!
- * 
- * Bootstrap 4+ Persian Date Time Picker jQuery Plugin
- * https://github.com/Mds92/MD.BootstrapPersianDateTimePicker
- * version : 3.3.5
- * Written By Mohammad Dayyan, Mordad 1397
- * mds.soft@gmail.com - @mdssoft
- * 
- *       
- */
-[data-mdpersiandatetimepicker][disabled] {
+﻿[data-mdpersiandatetimepicker][disabled] {
     opacity: 0.5;
     cursor: default;
 }
 
 .mds-bootstrap-persian-datetime-picker-container {
-    min-width: 300px;
+    width: 100%;
     font-size: 12px;
     position: relative;
     overflow: visible;
@@ -86,7 +76,6 @@
 
 .mds-bootstrap-persian-datetime-picker-container table table {
     background: transparent !important;
-    background-color: transparent !important;
     border: none;
 }
 
@@ -94,8 +83,8 @@
     border: none;
 }
 
-.mds-bootstrap-persian-datetime-picker-container table table input[type="text"] {
-    width: 50px;
+.mds-bootstrap-persian-datetime-picker-container table table input {
+    width: 100%;
     border: none;
     text-align: center;
     background-color: #fff;
@@ -109,7 +98,7 @@
     border: 0;
 }
 
-.mds-bootstrap-persian-datetime-picker-container table table tbody.days tr:first-child>td {
+.mds-bootstrap-persian-datetime-picker-container table table tbody.days tr:first-child > td {
     vertical-align: top;
     padding-bottom: 5px;
     width: 14.2%;
@@ -198,10 +187,8 @@
 }
 
 .mds-bootstrap-persian-datetime-picker-popover {
-    max-width: 100%;
+    max-width: 300px;
     -webkit-box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.1);
     z-index: 999999999;
 }
-
-/*# sourceMappingURL=jquery.md.bootstrap.datetimepicker.style.css.map*/
