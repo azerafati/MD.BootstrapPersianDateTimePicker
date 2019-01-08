@@ -1652,9 +1652,9 @@
     $(document).on('blur', mdDatePickerContainerSelector + ' input[data-clock]', function () {
         var $this = $(this),
             $thisContainer = $this.parents(mdDatePickerContainerSelector + ':first'),
-            $hour = $thisContainer.find('input[type="text"][data-clock="hour"]'),
-            $minute = $thisContainer.find('input[type="text"][data-clock="minute"]'),
-            $second = $thisContainer.find('input[type="text"][data-clock="second"]'),
+            $hour = $thisContainer.find('input[type="number"][data-clock="hour"]'),
+            $minute = $thisContainer.find('input[type="number"][data-clock="minute"]'),
+            $second = $thisContainer.find('input[type="number"][data-clock="second"]'),
             hour = Number($hour.val()),
             minute = Number($minute.val()),
             second = Number($second.val()),
@@ -1824,7 +1824,7 @@
                     } catch (e) {
                         setSelectedData(setting);
                     }
-                });
+                })
             });
         },
         getText: function () {
