@@ -1,8 +1,6 @@
 /node_modules/
-/dist/
 /lib/
 /yarn.lock
 *.log.*
 /.idea/
 /.idea/**
-**/*.map

@@ -1,3 +1,17 @@
+
+[![Build Status](https://api.travis-ci.org/azerafati/az.BootstrapPersianDateTimePicker.svg?branch=master)](https://travis-ci.org/azerafati/az.BootstrapPersianDateTimePicker)
+[![npm version](https://img.shields.io/npm/v/az.bootstrappersiandatetimepicker.svg)](https://www.npmjs.com/package/az.bootstrappersiandatetimepicker)
+[![Issues](https://img.shields.io/github/issues/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/issues)
+[![Dependencies Status](https://img.shields.io/david/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://david-dm.org/azerafati/az.BootstrapPersianDateTimePicker?type=peer)
+[![devDependency Status](https://img.shields.io/david/dev/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://david-dm.org/azerafati/az.BootstrapPersianDateTimePicker?type=dev)
+[![Coverage Status](https://coveralls.io/repos/github/azerafati/az.BootstrapPersianDateTimePicker/badge.svg?branch=master-bs4)](https://coveralls.io/github/azerafati/az.BootstrapPersianDateTimePicker?branch=master-bs4)
+[![CSS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css?compression=gzip&label=CSS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css)
+[![JS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js?compression=gzip&label=JS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js)
+[![License](https://img.shields.io/github/license/azerafati/az.BootstrapPersianDateTimePicker.svg)](#license)
+
+
+
+
 # az.BootstrapPersianDateTimePicker
 #### Bootstrap 4+ Persian And Gregorian Date Time Picker jQuery 3+ Plugin + AngularJS Wrapper
 

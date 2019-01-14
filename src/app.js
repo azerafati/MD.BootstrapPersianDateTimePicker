@@ -194,7 +194,7 @@
     var dateTimePickerHtmlTemplate = `<div class="mds-bootstrap-persian-datetime-picker-container {{rtlCssClass}}" ${mdDatePickerContainerFlag}>
     <div class="select-year-box w-0">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row no-gutters">
                 {{yearsToSelectHtml}}
             </div>
         </div>
@@ -598,8 +598,7 @@
                 amPm = 'PM';
             else
                 amPm = 'ب.ظ';
-        } else
-        if (isGregorian)
+        } else if (isGregorian)
             amPm = 'AM';
         else
             amPm = 'ق.ظ';
@@ -735,8 +734,8 @@
     }
 
     function zeroPad(nr, base) {
-        if (nr == undefined || nr == '') return '00';
-        if (base == undefined || base == '') base = '00';
+        if (nr === undefined || nr === '') return '00';
+        if (base === undefined || base === '') base = '00';
         var len = (String(base).length - String(nr).length) + 1;
         return len > 0 ? new Array(len).join('0') + nr : nr;
     }
@@ -1801,30 +1800,32 @@
                         }, 10);
                     });
                 }
-                setting.targetTextSelector && setting.targetTextSelector.on('change', function () {
-                    if (triggerChangeCalling) {
-                        setTimeout(function(){
-                            triggerChangeCalling = false;
-                        }, 100);
-                        return;
-                    }
-                    var $this1 = $(this),
-                        value1 = $this1.val();
-                    if (!value1) {
-                        $this.MdPersianDateTimePicker('clearDate');
-                        return;
-                    }
-                    try {
-                        if (!setting.rangeSelector)
-                            $this.MdPersianDateTimePicker('setDate', parseDateTime(value1, setting));
-                        else {
-                            let dateValues = value1.split(' - ');
-                            $this.MdPersianDateTimePicker('setDateRange', parseDateTime(dateValues[0], setting), parseDateTime(dateValues[1], setting));
+                if (setting.targetTextSelector) {
+                    setting.targetTextSelector.on('change', function () {
+                        if (triggerChangeCalling) {
+                            setTimeout(function () {
+                                triggerChangeCalling = false;
+                            }, 100);
+                            return;
                         }
-                    } catch (e) {
-                        setSelectedData(setting);
-                    }
-                })
+                        var $this1 = $(this),
+                            value1 = $this1.val();
+                        if (!value1) {
+                            $this.MdPersianDateTimePicker('clearDate');
+                            return;
+                        }
+                        try {
+                            if (!setting.rangeSelector)
+                                $this.MdPersianDateTimePicker('setDate', parseDateTime(value1, setting));
+                            else {
+                                let dateValues = value1.split(' - ');
+                                $this.MdPersianDateTimePicker('setDateRange', parseDateTime(dateValues[0], setting), parseDateTime(dateValues[1], setting));
+                            }
+                        } catch (e) {
+                            setSelectedData(setting);
+                        }
+                    });
+                }
             });
         },
         getText: function () {
