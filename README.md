@@ -21,17 +21,17 @@ Originally forked from
 Using bootstrap's [Popovers](https://getbootstrap.com/docs/4.2/components/popovers/), `az.BootstrapPersianDateTimePicker` is very flexible and powerful.
 <hr>
 
-##Dependencies:
+## Dependencies:
 
  - [`jQuery`](https://jquery.com/)
  - [`Bootstrap 4+`](https://getbootstrap.com/)
  - [`MomentJS`](https://momentjs.com/)
  - [`moment-jalaali`](https://github.com/jalaali/moment-jalaali)
 
-##Install
+## Install
 
 ```shell
-npm install az.bootstrappersiandatetimepicker@latest
+npm install az.bootstrappersiandatetimepicker
 ```
 
 Now add these to your html:

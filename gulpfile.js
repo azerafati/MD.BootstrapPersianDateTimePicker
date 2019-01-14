@@ -29,10 +29,10 @@ gulp.task('browser-sync', function (done) {
     browserSync.init({
         server: {
             baseDir: "./",
-            startPath: '/demo/index.html',
+            index: '/demo/index.html',
         },
         ui: false,
-        browser: "google chrome"
+        //browser: "chrome"
     });
 
     done();

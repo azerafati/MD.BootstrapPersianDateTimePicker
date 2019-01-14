@@ -1,14 +1,1946 @@
-/**
+/*
+ * Bootstrap 4+ Persian Date Time Picker jQuery Plugin
+ * version : 3.3.5
+ * https://github.com/azerafati/az.BootstrapPersianDateTimePicker
+ * Originally forked from https://github.com/Mds92/MD.BootstrapPersianDateTimePicker By Mohammad Dayyan
+ *
+ *
+ * By Alireza Zerafati
+ * azerafati@gmail.com
+ * azerafati.com
+ *
+ */
 
-   _____  __________                   _____        __  .__                          
-  /  _  \ \____    /________________ _/ ____\____ _/  |_|__|     ____  ____   _____  
- /  /_\  \  /     // __ \_  __ \__  \\   __\\__  \\   __\  |   _/ ___\/  _ \ /     \ 
-/    |    \/     /\  ___/|  | \// __ \|  |   / __ \|  | |  |   \  \__(  <_> )  Y Y  \
-\____|__  /_______ \___  >__|  (____  /__|  (____  /__| |__| /\ \___  >____/|__|_|  /
-        \/        \/   \/           \/           \/          \/     \/            \/ 
 
-* az.bootstrappersiandatetimepicker
-* @version v1.0.1
-* @website https://azerafati.com
-*/
-!function(e){function t(e,t,a){return function(e){var t,a,r,l=i(e).gy,c=l-621,m=n(c),u=o(l,3,m.march);if((r=e-u)>=0){if(r<=185)return a=1+s(r,31),t=d(r,31)+1,{jy:c,jm:a,jd:t};r-=186}else c-=1,r+=179,1===m.leap&&(r+=1);return a=7+s(r,30),t=d(r,30)+1,{jy:c,jm:a,jd:t}}(o(e,t,a))}function a(e,t,a){return i(function(e,t,a){var r=n(e);return o(r.gy,3,r.march)+31*(t-1)-s(t,7)*(t-7)+a-1}(e,t,a))}function r(e){return 0===n(e).leap}function n(e){var t,a,r,n,o=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178],i=o.length,l=e+621,c=-14,m=o[0],u=1;if(e<m||e>=o[i-1])throw new Error("Invalid Jalaali year "+e);for(n=1;n<i&&(u=(t=o[n])-m,!(e<t));n+=1)c=c+8*s(u,33)+s(d(u,33),4),m=t;c=c+8*s(r=e-m,33)+s(d(r,33)+3,4),4===d(u,33)&&u-r==4&&(c+=1);var g=20+c-(s(l,4)-s(3*(s(l,100)+1),4)-150);return u-r<6&&(r=r-u+33*s(u+4,33)),-1===(a=d(d(r+1,33)-1,4))&&(a=4),{leap:a,gy:l,march:g}}function o(e,t,a){var r=s(1461*(e+s(t-8,6)+100100),4)+s(153*d(t+9,12)+2,5)+a-34840408;return r=r-s(3*s(e+100100+s(t-8,6),100),4)+752}function i(e){var t,a=5*s(d(t=(t=4*e+139361631)+4*s(3*s(4*e+183187720,146097),4)-3908,1461),4)+308,r=s(d(a,153),5)+1,n=d(s(a,153),12)+1;return{gy:s(t,1461)-100100+s(8-n,6),gm:n,gd:r}}function s(e,t){return~~(e/t)}function d(e,t){return e-~~(e/t)*t}var l="[data-mdpersiandatetimepicker]",c="data-mdpersiandatetimepicker-group",m="[data-mdpersiandatetimepicker-popover]",u="[data-mdpersiandatetimepicker-container]",g="MdPersianDateTimePicker",h=!1,D='<div class="mds-bootstrap-persian-datetime-picker-container {{rtlCssClass}}" data-mdpersiandatetimepicker-container>\n    <div class="select-year-box w-0">\n        <div class="container-fluid">\n            <div class="row">\n                {{yearsToSelectHtml}}\n            </div>\n        </div>\n    </div>\n    <table class="table table-sm text-center p-0 m-0">\n        <thead>\n        <tr {{selectedDateStringAttribute}}>\n            <th colspan="100" data-selecteddatestring>{{selectedDateString}}</th>\n        </tr>\n        </thead>\n        <tbody>\n        <tr>\n            {{monthsTdHtml}}\n        </tr>\n        </tbody>\n        <tfoot>\n        <tr {{timePickerAttribute}}>\n            <td colspan="100" class="border-0">\n                <table class="table table-sm table-borderless">\n                    <tbody>\n                    <tr>\n                        <td>\n                            <input type="number" title="{{hourText}}" value="{{hour}}" maxlength="2" data-clock="hour"/>\n                        </td>\n                        <td>:</td>\n                        <td>\n                            <input type="number" title="{{minuteText}}" value="{{minute}}" maxlength="2" data-clock="minute"/>\n                        </td>\n                        <td>:</td>\n                        <td>\n                            <input type="number" title="{{secondText}}" value="{{second}}" maxlength="2" data-clock="second"/>\n                        </td>\n                    </tr>\n                    </tbody>\n                </table>\n            </td>\n        </tr>\n        <tr>\n            <td colspan="100">\n                <button type="button" class="btn btn-light" title="{{goTodayText}}" data-go-today>{{todayDateString}}</button>\n            </td>\n        </tr>\n        </tfoot>\n    </table>\n</div>',b='<td class="border-0" style="{{monthTdStyle}}" {{monthTdAttribute}} data-td-month>\n    <table class="table table-sm table-striped table-borderless">\n        <thead>\n        <tr {{monthNameAttribute}}>\n            <th colspan="100" class="border-0">\n                <table class="table table-sm table-borderless">\n                    <thead>\n                    <tr>\n                        <th>\n                            <button type="button" class="btn btn-light"> {{currentMonthInfo}}</button>\n                        </th>\n                    </tr>\n                    </thead>\n                </table>\n            </th>\n        </tr>\n        <tr {{theadSelectDateButtonTrAttribute}}>\n            <td colspan="100" class="border-0">\n                <table class="table table-sm table-borderless">\n                    <tr>\n                        <th>\n                            <button type="button" class="btn btn-light btn-sm" title="{{previousYearText}}" data-changedatebutton data-number="{{previousYearButtonDateNumber}}" {{previousYearButtonDisabledAttribute}}> &lt;&lt;</button>\n                        </th>\n                        <th>\n                            <button type="button" class="btn btn-light btn-sm" title="{{previousMonthText}}" data-changedatebutton data-number="{{previousMonthButtonDateNumber}}" {{previousMonthButtonDisabledAttribute}}> &lt;</button>\n                        </th>\n                        <th style="width: 120px;">\n                            <div class="dropdown">\n                                <button type="button" class="btn btn-light btn-sm dropdown-toggle" id="mdsBootstrapPersianDatetimePickerMonthSelectorButon"\n                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n                                    {{selectedMonthName}}\n                                </button>\n                                <div class="dropdown-menu" aria-labelledby="mdsBootstrapPersianDatetimePickerMonthSelectorButon">\n                                    <a class="dropdown-item {{selectMonth1ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth1DateNumber}}">{{monthName1}}</a>\n                                    <a class="dropdown-item {{selectMonth2ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth2DateNumber}}">{{monthName2}}</a>\n                                    <a class="dropdown-item {{selectMonth3ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth3DateNumber}}">{{monthName3}}</a>\n                                    <div class="dropdown-divider"></div>\n                                    <a class="dropdown-item {{selectMonth4ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth4DateNumber}}">{{monthName4}}</a>\n                                    <a class="dropdown-item {{selectMonth5ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth5DateNumber}}">{{monthName5}}</a>\n                                    <a class="dropdown-item {{selectMonth6ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth6DateNumber}}">{{monthName6}}</a>\n                                    <div class="dropdown-divider"></div>\n                                    <a class="dropdown-item {{selectMonth7ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth7DateNumber}}">{{monthName7}}</a>\n                                    <a class="dropdown-item {{selectMonth8ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth8DateNumber}}">{{monthName8}}</a>\n                                    <a class="dropdown-item {{selectMonth9ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth9DateNumber}}">{{monthName9}}</a>\n                                    <div class="dropdown-divider"></div>\n                                    <a class="dropdown-item {{selectMonth10ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth10DateNumber}}">{{monthName10}}</a>\n                                    <a class="dropdown-item {{selectMonth11ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth11DateNumber}}">{{monthName11}}</a>\n                                    <a class="dropdown-item {{selectMonth12ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth12DateNumber}}">{{monthName12}}</a>\n                                </div>\n                            </div>\n                        </th>\n                        <th style="width: 50px;">\n                            <button type="button" class="btn btn-light btn-sm" select-year-button {{selectYearButtonDisabledAttribute}}>{{selectedYear}}</button>\n                        </th>\n                        <th>\n                            <button type="button" class="btn btn-light btn-sm" title="{{nextMonthText}}" data-changedatebutton data-number="{{nextMonthButtonDateNumber}}" {{nextMonthButtonDisabledAttribute}}> &gt;</button>\n                        </th>\n                        <th>\n                            <button type="button" class="btn btn-light btn-sm" title="{{nextYearText}}" data-changedatebutton data-number="{{nextYearButtonDateNumber}}" {{nextYearButtonDisabledAttribute}}> &gt;&gt;</button>\n                        </th>\n                    </tr>\n                </table>\n            </td>\n        </tr>\n        </thead>\n        <tbody class="days">\n        <tr>\n            <td class="{{weekDayShortName1CssClass}}">{{weekDayShortName1}}</td>\n            <td>{{weekDayShortName2}}</td>\n            <td>{{weekDayShortName3}}</td>\n            <td>{{weekDayShortName4}}</td>\n            <td>{{weekDayShortName5}}</td>\n            <td>{{weekDayShortName6}}</td>\n            <td class="{{weekDayShortName7CssClass}}">{{weekDayShortName7}}</td>\n        </tr>\n        {{daysHtml}}\n        </tbody>\n    </table>\n</td>\n    ';triggerChangeCalling=!1;var p="سال قبل",y="ماه قبل",f="سال بعد",v="ماه بعد",M="ساعت",S="دقیقه",C="ثانیه",w="برو به امروز",N="Previous Year",T="Previous Month",B="Next Year",k="Next Month",x="Go Today",G="Hour",P="Minute",A="Second",F={am:0,pm:1,none:2},E=["ش","ی","د","س","چ","پ","ج"],Y=["SU","MO","TU","WE","TH","FR","SA"],H=["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"],I=["January","February","March","April","May","June","July","August","September","October","November","December"],O=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],$=["یک شنبه","دوشنبه","سه شنبه","چهارشنبه","پنج شنبه","جمعه","شنبه"];function L(t){var a=t.parents(l+":first");return a.length<=0&&(a=t.parents(m+":first"),a=e('[aria-describedby="'+a.attr("id")+'"]')),a}function j(e){return L(e).data(g)}function W(e){return e.data(g)}function R(e,t){return L(e).data(g,t)}function J(e,t){return e.data(g,t)}function U(e,t){var a=Se(t);(t.inLine?e.parents(l+":first"):e.parents('[data-name="mds-datetimepicker-popoverbody"]:first')).html(a)}function q(e){return void 0==e.selectedDate?"":e.rangeSelector&&void 0!=e.rangeSelectorStartDate&&void 0!=e.rangeSelectorEndDate?ye(e.isGregorian?ue(e.rangeSelectorStartDate):ge(e.rangeSelectorStartDate),e.textFormat,e.isGregorian,e.englishNumber)+" - "+ye(e.isGregorian?ue(e.rangeSelectorEndDate):ge(e.rangeSelectorEndDate),e.textFormat,e.isGregorian,e.englishNumber):ye(e.isGregorian?ue(e.selectedDate):ge(e.selectedDate),e.textFormat,e.isGregorian,e.englishNumber)}function Q(e){return void 0==e.selectedDate?"":e.rangeSelector&&void 0!=e.rangeSelectorStartDate&&void 0!=e.rangeSelectorEndDate?ye(ue(e.rangeSelectorStartDate),e.dateFormat,e.isGregorian,!0)+" - "+ye(ue(e.rangeSelectorEndDate),e.dateFormat,e.isGregorian,!0):ye(ue(e.selectedDate),e.dateFormat,e.isGregorian,!0)}function z(t){var a=e(t.targetTextSelector);if(a.length>0)switch(a[0].tagName.toLowerCase()){case"input":a.val(q(t)),triggerChangeCalling=!0,a.trigger("change");break;default:a.text(q(t)),triggerChangeCalling=!0,a.trigger("change")}var r=t.targetDateSelector;if(r.length>0)switch(r[0].tagName.toLowerCase()){case"input":r.val(Q(t)),triggerChangeCalling=!0,r.trigger("change");break;default:r.text(Q(t)),triggerChangeCalling=!0,r.trigger("change")}}function K(e){return!isNaN(parseFloat(e))&&isFinite(e)}function V(e){if(!e)return"";var t=e.toString().trim();return t?t=(t=(t=(t=(t=(t=(t=(t=(t=(t=t.replace(/0/gim,"۰")).replace(/1/gim,"۱")).replace(/2/gim,"۲")).replace(/3/gim,"۳")).replace(/4/gim,"۴")).replace(/5/gim,"۵")).replace(/6/gim,"۶")).replace(/7/gim,"۷")).replace(/8/gim,"۸")).replace(/9/gim,"۹"):""}function X(e){if(!e)return"";var t=e.toString().trim();return t?t=(t=(t=(t=(t=(t=(t=(t=(t=(t=t.replace(/۰/gim,"0")).replace(/۱/gim,"1")).replace(/۲/gim,"2")).replace(/۳/gim,"3")).replace(/۴/gim,"4")).replace(/۵/gim,"5")).replace(/۶/gim,"6")).replace(/۷/gim,"7")).replace(/۸/gim,"8")).replace(/۹/gim,"9"):""}function Z(e,t){return t?I[e]:H[e]}function _(t,a,r){var n=e.extend({},t);return n.day=1,n.month+=a,r?ue(ce(n)):(n.month<=0&&(n.month=12,n.year--),n.month>12&&(n.year++,n.month=1),n)}function ee(e,t,a){return a?ce(_(ue(e),t,a)):le(_(ge(e),t,a))}function te(e,t){return t?O[e]:$[e]}function ae(e,t){return t?Y[e]:E[e]}function re(e,t){return e>12?t?"PM":"ب.ظ":t?"AM":"ق.ظ"}function ne(e){e&&e.popover("hide")}function oe(e){return Number(pe(e.year)+pe(e.month)+pe(e.day))}function ie(e,t,a){return Number(pe(e)+pe(t)+pe(a))}function se(e){return oe(ue(e))}function de(e,t,r,n,o,i){K(n)||(n=0),K(o)||(o=0),K(i)||(i=0);var s=a(e,t,r);return new Date(s.gy,s.gm-1,s.gd,n,o,i)}function le(e){e.hour||(e.hour=0),e.minute||(e.minute=0),e.second||(e.second=0);var t=a(e.year,e.month,e.day);return new Date(t.gy,t.gm-1,t.gd,e.hour,e.minute,e.second)}function ce(e){return new Date(e.year,e.month-1,e.day,e.hour,e.minute,e.second)}function me(e,t,a){var r=function(e){return{year:Math.floor(e/1e4),month:Math.floor(e/100)%100,day:e%100,hour:0,minute:0,second:0}}(e);if(a.isGregorian)t=new Date(r.year,r.month-1,r.day);else{var n=ge(t);n.year=r.year,n.month=r.month,n.day=r.day,t=le(n)}return t}function ue(e){return{year:e.getFullYear(),month:e.getMonth()+1,day:e.getDate(),hour:e.getHours(),minute:e.getMinutes(),second:e.getSeconds(),dayOfWeek:e.getDay()}}function ge(e){var a=t(e.getFullYear(),e.getMonth()+1,e.getDate());return{year:a.jy,month:a.jm,day:a.jd,hour:e.getHours(),minute:e.getMinutes(),second:e.getSeconds(),dayOfWeek:e.getDay()}}function he(e,t){var a=31;return t>6&&t<12?a=30:12==t&&(a=r(e)?30:29),a}function De(e,t){return new Date(e,t+1,0).getDate()}function be(e){return new Date(e.getTime())}function pe(e,t){if(void 0==e||""==e)return"00";void 0!=t&&""!=t||(t="00");var a=String(t).length-String(e).length+1;return a>0?new Array(a).join("0")+e:e}function ye(e,t,a,r){var n;return a&&(r=!0),t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=(t=t.replace(/yyyy/gm,e.year)).replace(/yy/gm,e.year%100)).replace(/MMMM/gm,Z(e.month,a))).replace(/MM/gm,pe(e.month))).replace(/M/gm,e.month)).replace(/dddd/gm,te(e.day,a))).replace(/dd/gm,pe(e.day))).replace(/d/gm,e.day)).replace(/HH/gm,pe(e.hour))).replace(/H/gm,e.hour)).replace(/hh/gm,pe((n=e.hour)>12?n-12:n))).replace(/h/gm,pe(e.hour))).replace(/mm/gm,pe(e.minute))).replace(/m/gm,e.minute)).replace(/ss/gm,pe(e.second))).replace(/s/gm,e.second)).replace(/fff/gm,pe(e.millisecond,"000"))).replace(/ff/gm,pe(e.millisecond/10))).replace(/f/gm,e.millisecond/100)).replace(/tt/gm,re(e.hour,a))).replace(/t/gm,re(e.hour,a)[0]),r||(t=V(t)),t}function fe(e,t){var a=be(e);if(t){var r=new Date(a.getFullYear(),a.getMonth()-1,1),n=De(r.getFullYear(),r.getMonth());return new Date(r.getFullYear(),r.getMonth(),n)}var o=ge(a);return o.month+=-1,o.month<=0?(o.month=12,o.year--):o.month>12&&(o.year++,o.month=1),de(o.year,o.month,he(o.year,o.month))}function ve(e,t){var a=be(e);if(t){var r=new Date(a.getFullYear(),a.getMonth()+1,1);return new Date(r.getFullYear(),r.getMonth(),1)}var n=ge(a);return n.month+=1,n.month<=0&&(n.month=12,n.year--),n.month>12&&(n.year++,n.month=1),de(n.year,n.month,1)}function Me(e,t){if(e)return t.isGregorian?function(e){if(!(e=X(e))){var t=new Date;return t.setHours(0),t.setMinutes(0),t.setSeconds(0),t.setMilliseconds(0),t}return new Date(e)}(e):function(e,t){t||(t="/|-"),t=new RegExp(t,"img"),e=X(e);var a=0,r=0,n=0,o=0,i=0,s=0,d=0,l=F.none,c=t.test(e);if((e="-"+(e=(e=(e=(e=(e=(e=e.replace(/&nbsp;/gim," ")).replace(/\s+/gim,"-")).replace(/\\/gim,"-")).replace(/ك/gim,"ک")).replace(/ي/gim,"ی")).replace(t,"-"))+"-").indexOf("ق.ظ")>-1?l=l.AM:e.indexOf("ب.ظ")>-1&&(l=l.PM),e.indexOf(":")>-1){o=(e=e.replace(/-*:-*/gim,":")).match(/-\d{1,2}(?=:)/gim)[0].replace(/\D+/,"");var m=e.match(/:\d{1,2}(?=:?)/gim);i=m[0].replace(/\D+/,""),void 0!=m[1]&&(s=m[1].replace(/\D+/,"")),void 0!=m[2]&&(d=m[2].replace(/\D+/,""))}if(c){var u=e.match(/-\d{1,2}(?=-\d{1,2}[^:]|-)/gim);a=u[0].replace(/\D+/,""),n=u[1].replace(/\D+/,""),r=e.match(/-\d{2,4}(?=-\d{1,2}[^:])/gim)[0].replace(/\D+/,"")}else{for(var g=1;g<12;g++){var h=Z(g-1,!1);if(!(e.indexOf(h)>-1)){a=g;break}}var D=e.match(/-\d{1,2}(?=-)/gim);null!=D&&(n=D[0].replace(/\D+/,""),e=e.replace(new RegExp("-"+n+"(?=-)","img"),"-"));var b=e.match(/-\d{4}(?=-)/gim);null!=b?r=b[0].replace(/\D+/,""):null!=(b=e.match(/-\d{2,4}(?=-)/gim))&&(r=b[0].replace(/\D+/,""))}var p=Number(r),y=Number(a),f=Number(n),v=Number(o),M=Number(i),S=Number(s);switch(Number(d),p<=0&&(p=persianDateTime[0]),y<=0&&(y=persianDateTime[1]),f<=0&&(f=persianDateTime[2]),l){case l.PM:v<12&&(v+=12);break;case l.AM:case l.None:}return de(p,y,f,v,M,S)}(e)}function Se(t){var a=be(t.selectedDateToShow),r=D;r=(r=(r=(r=(r=(r=(r=r.replace(/{{rtlCssClass}}/gim,t.isGregorian?"":"rtl")).replace(/{{selectedDateStringAttribute}}/gim,t.inLine?"":"hidden")).replace(/{{hourText}}/gim,t.isGregorian?G:M)).replace(/{{minuteText}}/gim,t.isGregorian?P:S)).replace(/{{secondText}}/gim,t.isGregorian?A:C)).replace(/{{goTodayText}}/gim,t.isGregorian?x:w)).replace(/{{timePickerAttribute}}/gim,t.enableTimePicker?"":"hidden");var n,o,i="",s="",d="",l={},m=t.rangeSelector&&t.rangeSelectorStartDate?be(t.rangeSelectorStartDate):void 0,u=t.rangeSelector&&t.rangeSelectorEndDate?be(t.rangeSelectorEndDate):void 0,g={},h={},b={},p={};if(t.isGregorian?(p=ue(a),l=ue(new Date),g=void 0!=m?ue(m):void 0,h=void 0!=u?ue(u):void 0,b=void 0==t.selectedDate?l:ue(t.selectedDate),n=t.disableBeforeDate?ue(t.disableBeforeDate):void 0,o=t.disableAfterDate?ue(t.disableAfterDate):void 0):(p=ge(a),l=ge(new Date),g=void 0!=m?ge(m):void 0,h=void 0!=u?ge(u):void 0,b=void 0==t.selectedDate?l:ge(t.selectedDate),n=t.disableBeforeDate?ge(t.disableBeforeDate):void 0,o=t.disableAfterDate?ge(t.disableAfterDate):void 0),(t.fromDate||t.toDate)&&t.groupId){var y=e("["+c+'="'+t.groupId+'"][data-toDate]'),f=e("["+c+'="'+t.groupId+'"][data-fromDate]');if(t.fromDate){var v=W(y).selectedDate;o=v?t.isGregorian?ue(v):ge(v):void 0}else if(t.toDate){var N=W(f).selectedDate;n=N?t.isGregorian?ue(N):ge(N):void 0}}s=t.rangeSelector&&void 0!=g&&void 0!=h?`${te(g.dayOfWeek,t.isGregorian)}، ${g.day} ${Z(g.month-1,t.isGregorian)} ${g.year} - \n                ${te(h.dayOfWeek,t.isGregorian)}، ${h.day} ${Z(h.month-1,t.isGregorian)} ${h.year}`:`${te(b.dayOfWeek,t.isGregorian)}، ${b.day} ${Z(b.month-1,t.isGregorian)} ${b.year}`,d=`${t.isGregorian?"Today,":"امروز،"} ${l.day} ${Z(l.month-1,t.isGregorian)} ${l.year}`,t.englishNumber||(s=V(s),d=V(d));for(var T=l.year-t.yearOffset;T<l.year+t.yearOffset;T++)if(!(t.disableBeforeToday&&T<l.year||t.disableAfterToday&&T>l.year||void 0!=n&&void 0!=n.year&&T<n.year||void 0!=o&&void 0!=o.year&&T>o.year)){var B=ie(T,p.month,he(T,p.month)),k="",F=t.englishNumber?T.toString():V(T),E=ie(T,p.month,1);void 0!=n&&void 0!=n.year&&B<oe(n)&&(k="disabled"),void 0!=o&&void 0!=o.year&&B<oe(o)&&(k="disabled"),t.disableBeforeToday&&B<oe(l)&&(k="disabled"),t.disableAfterToday&&B>oe(l)&&(k="disabled"),i+=`\n<div class="col-3 text-center" ${p.year==T?"selected-year":""}>\n    <button class="btn btn-sm btn-light" type="button" data-changedatebutton data-number="${E}" ${k}>${F}</button>\n</div>`}void 0!=o&&o.year<=p.year&&o.month<p.month&&(a=t.isGregorian?new Date(o.year,o.month-1,1):de(o.year,o.month,o.day)),void 0!=n&&n.year>=p.year&&n.month>p.month&&(a=t.isGregorian?new Date(n.year,n.month-1,1):de(n.year,n.month,n.day));for(var Y="",H=t.monthsToShow[1]<=0?0:t.monthsToShow[1],I=t.monthsToShow[0]<=0?0:t.monthsToShow[0],O=I*=-1;O<0;O++)t.selectedDateToShow=ee(be(a),O),Y+=Ce(t,!1,!0);t.selectedDateToShow=be(a),Y+=Ce(t,!1,!1);for(var $=1;$<=H;$++)t.selectedDateToShow=ee(be(a),$),Y+=Ce(t,!0,!1);var L=Math.abs(I)+1+H,j=L>1?"width: "+(100/L).toString()+"%;":"";return Y=Y.replace(/{{monthTdStyle}}/gim,j),r=(r=(r=(r=(r=(r=(r=r.replace(/{{yearsToSelectHtml}}/gim,i)).replace(/{{selectedDateString}}/gim,s)).replace(/{{todayDateString}}/gim,d)).replace(/{{hour}}/gim,p.hour)).replace(/{{minute}}/gim,p.minute)).replace(/{{second}}/gim,p.second)).replace(/{{monthsTdHtml}}/gim,Y)}function Ce(t,r,n){var o=be(t.selectedDateToShow),i=be(o),s=void 0!=t.selectedDate?be(t.selectedDate):void 0,d=r||n,l=b;l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=l.replace(/{{monthTdAttribute}}/gim,r?"data-next-month":n?"data-prev-month":"")).replace(/{{monthNameAttribute}}/gim,d?"":"hidden")).replace(/{{theadSelectDateButtonTrAttribute}}/gim,t.inLine||!d?"":"hidden")).replace(/{{weekDayShortName1CssClass}}/gim,t.isGregorian?"text-danger":"")).replace(/{{weekDayShortName7CssClass}}/gim,t.isGregorian?"":"text-danger")).replace(/{{previousYearText}}/gim,t.isGregorian?N:p)).replace(/{{previousMonthText}}/gim,t.isGregorian?T:y)).replace(/{{nextMonthText}}/gim,t.isGregorian?k:v)).replace(/{{nextYearText}}/gim,t.isGregorian?B:f)).replace(/{{monthName1}}/gim,Z(0,t.isGregorian))).replace(/{{monthName2}}/gim,Z(1,t.isGregorian))).replace(/{{monthName3}}/gim,Z(2,t.isGregorian))).replace(/{{monthName4}}/gim,Z(3,t.isGregorian))).replace(/{{monthName5}}/gim,Z(4,t.isGregorian))).replace(/{{monthName6}}/gim,Z(5,t.isGregorian))).replace(/{{monthName7}}/gim,Z(6,t.isGregorian))).replace(/{{monthName8}}/gim,Z(7,t.isGregorian))).replace(/{{monthName9}}/gim,Z(8,t.isGregorian))).replace(/{{monthName10}}/gim,Z(9,t.isGregorian))).replace(/{{monthName11}}/gim,Z(10,t.isGregorian))).replace(/{{monthName12}}/gim,Z(11,t.isGregorian))).replace(/{{weekDayShortName1}}/gim,ae(0,t.isGregorian))).replace(/{{weekDayShortName2}}/gim,ae(1,t.isGregorian))).replace(/{{weekDayShortName3}}/gim,ae(2,t.isGregorian))).replace(/{{weekDayShortName4}}/gim,ae(3,t.isGregorian))).replace(/{{weekDayShortName5}}/gim,ae(4,t.isGregorian))).replace(/{{weekDayShortName6}}/gim,ae(5,t.isGregorian))).replace(/{{weekDayShortName7}}/gim,ae(6,t.isGregorian));var m,u,g,h,D,M,S,C=0,w=0,x=0,G=0,P=0,A={},F={},E=e("<tr />"),Y=e("<td />"),H="",I=0,O="",$=0,L=0,j=0,R=0,J=t.rangeSelector&&void 0!=t.rangeSelectorStartDate?be(t.rangeSelectorStartDate):void 0,U=t.rangeSelector&&void 0!=t.rangeSelectorEndDate?be(t.rangeSelectorEndDate):void 0,q=0,Q=0,z="0",X="",ee={month1DateNumber:0,month2DateNumber:0,month3DateNumber:0,month4DateNumber:0,month5DateNumber:0,month6DateNumber:0,month7DateNumber:0,month8DateNumber:0,month9DateNumber:0,month10DateNumber:0,month11DateNumber:0,month12DateNumber:0,selectMonth1ButtonCssClass:"",selectMonth2ButtonCssClass:"",selectMonth3ButtonCssClass:"",selectMonth4ButtonCssClass:"",selectMonth5ButtonCssClass:"",selectMonth6ButtonCssClass:"",selectMonth7ButtonCssClass:"",selectMonth8ButtonCssClass:"",selectMonth9ButtonCssClass:"",selectMonth10ButtonCssClass:"",selectMonth11ButtonCssClass:"",selectMonth12ButtonCssClass:""},re=[],ne=[],de={},le={},ce="",me="",ye="",Me="",Se="";if(t.isGregorian){for(F=ue(i),A=ue(new Date),de=t.disableBeforeDate?ue(t.disableBeforeDate):void 0,le=t.disableAfterDate?ue(t.disableAfterDate):void 0,m=new Date(F.year,F.month-1,1).getDay(),P=s?oe(ue(s)):0,D=De(F.year,F.month-1),numberOfDaysInPreviousMonth=De(F.year,F.month-2),$=oe(ue(fe(i,!0))),L=oe(ue(ve(i,!0))),i=be(o),j=oe(ue(new Date(i.setFullYear(i.getFullYear()-1)))),i=be(o),R=oe(ue(new Date(i.setFullYear(i.getFullYear()+1)))),i=be(o),q=t.rangeSelector&&J?se(J):0,Q=t.rangeSelector&&U?se(U):0,C=1;C<=12;C++)ee["month"+C.toString()+"DateNumber"]=oe(ue(new Date(i.setMonth(C-1)))),i=be(o);for(C=0;C<t.holiDays.length;C++)re.push(oe(ue(t.holiDays[C])));for(C=0;C<t.disabledDates.length;C++)ne.push(oe(ue(t.disabledDates[C])))}else{for(F=ge(i),A=ge(new Date),de=t.disableBeforeDate?ge(t.disableBeforeDate):void 0,le=t.disableAfterDate?ge(t.disableAfterDate):void 0,m=function(e,t,r,n,o,i){K(n)||(n=0),K(o)||(o=0),K(i)||(i=0);var s=a(e,t,r);return ge(new Date(s.gy,s.gm-1,s.gd,n,o,i))}(F.year,F.month,1,0,0,0).dayOfWeek,P=s?oe(ge(s)):0,D=he(F.year,F.month),numberOfDaysInPreviousMonth=he(F.year-1,F.month-1),$=oe(ge(fe(i,!1))),L=oe(ge(ve(i=be(o),!1))),i=be(o),j=ie(F.year-1,F.month,F.day),R=ie(F.year+1,F.month,F.day),i=be(o),q=t.rangeSelector&&J?oe(ge(J)):0,Q=t.rangeSelector&&U?oe(ge(U)):0,C=1;C<=12;C++)ee["month"+C.toString()+"DateNumber"]=ie(F.year,C,he(F.year,C)),i=be(o);for(C=0;C<t.holiDays.length;C++)re.push(oe(ge(t.holiDays[C])));for(C=0;C<t.disabledDates.length;C++)ne.push(oe(ge(t.disabledDates[C])))}if((t.fromDate||t.toDate)&&t.groupId){var Ce=e("["+c+'="'+t.groupId+'"][data-toDate]'),we=e("["+c+'="'+t.groupId+'"][data-fromDate]');if(t.fromDate){var Ne=W(Ce).selectedDate;le=Ne?t.isGregorian?ue(Ne):ge(Ne):void 0}else if(t.toDate){var Te=W(we).selectedDate;de=Te?t.isGregorian?ue(Te):ge(Te):void 0}}if(h=oe(A),u=t.englishNumber?F.year:V(F.year),M=de?oe(de):void 0,S=le?oe(le):void 0,O=Z(F.month-1,t.isGregorian)+" "+F.year.toString(),t.englishNumber||(O=V(O)),g=Z(F.month-1,t.isGregorian),t.yearOffset<=0&&(ce="disabled",Se="disabled",ye="disabled"),6!=m){t.isGregorian&&m--;var Be=_(F,-1,t.isGregorian);for(C=numberOfDaysInPreviousMonth-m;C<=numberOfDaysInPreviousMonth;C++)I=ie(Be.year,Be.month,C),z=t.englishNumber?pe(C):V(pe(C)),Y=e("<td data-nm />").attr("data-number",I).html(z),t.rangeSelector&&(I==q||I==Q?Y.addClass("selected-range-days-start-end"):q>0&&Q>0&&I>q&&I<Q&&Y.addClass("selected-range-days")),t.isGregorian||6!=G?t.isGregorian&&0==G&&Y.addClass("text-danger"):Y.addClass("text-danger"),E.append(Y),x++,++G>=7&&(G=0,H+=E[0].outerHTML,isTrAppended=!0,E=e("<tr />"))}for(C=1;C<=D;C++){for(G>=7&&(G=0,H+=E[0].outerHTML,isTrAppended=!0,E=e("<tr />")),I=ie(F.year,F.month,C),z=t.englishNumber?pe(C):V(pe(C)),Y=e("<td data-day />").attr("data-number",I).html(z),I==h&&(Y.attr("data-today",""),X||(X=te(G-1<0?0:G-1,t.isGregorian))),t.rangeSelector||P!=I||(Y.attr("data-selectedday",""),X=te(G-1<0?0:G-1,t.isGregorian)),w=0;w<re.length;w++)if(re[w]==I){Y.addClass("text-danger");break}if(t.isGregorian||6!=G?t.isGregorian&&0==G&&Y.addClass("text-danger"):Y.addClass("text-danger"),t.disableBeforeToday)for(I<h&&Y.attr("disabled",""),L<h&&(Me="disabled"),R<h&&(Se="disabled"),$<h&&(me="disabled"),j<h&&(ce="disabled"),w=1;w<=12;w++)ee["month"+w.toString()+"DateNumber"]<h&&(ee["selectMonth"+w.toString()+"ButtonCssClass"]="disabled");if(t.disableAfterToday)for(I>h&&Y.attr("disabled",""),L>h&&(Me="disabled"),R>h&&(Se="disabled"),$>h&&(me="disabled"),j>h&&(ce="disabled"),w=1;w<=12;w++)ee["month"+w.toString()+"DateNumber"]>h&&(ee["selectMonth"+w.toString()+"ButtonCssClass"]="disabled");if(S)for(I>S&&Y.attr("disabled",""),L>S&&(Me="disabled"),R>S&&(Se="disabled"),$>S&&(me="disabled"),j>S&&(ce="disabled"),w=1;w<=12;w++)ee["month"+w.toString()+"DateNumber"]>S&&(ee["selectMonth"+w.toString()+"ButtonCssClass"]="disabled");if(M)for(I<M&&Y.attr("disabled",""),L<M&&(Me="disabled"),R<M&&(Se="disabled"),$<M&&(me="disabled"),j<M&&(ce="disabled"),w=1;w<=12;w++)ee["month"+w.toString()+"DateNumber"]<M&&(ee["selectMonth"+w.toString()+"ButtonCssClass"]="disabled");for(w=0;w<ne.length;w++)I==ne[w]&&Y.attr("disabled","");t.rangeSelector&&(I==q||I==Q?Y.addClass("selected-range-days-start-end"):q>0&&Q>0&&I>q&&I<Q&&Y.addClass("selected-range-days")),E.append(Y),isTrAppended=!1,G++,x++}G>=7&&(G=0,H+=E[0].outerHTML,isTrAppended=!0,E=e("<tr />"));var ke=_(F,1,t.isGregorian);for(C=1;C<=42-x;C++)z=t.englishNumber?pe(C):V(pe(C)),I=ie(ke.year,ke.month,C),Y=e("<td data-nm />").attr("data-number",I).html(z),t.rangeSelector&&(I==q||I==Q?Y.addClass("selected-range-days-start-end"):q>0&&Q>0&&I>q&&I<Q&&Y.addClass("selected-range-days")),t.isGregorian||6!=G?t.isGregorian&&0==G&&Y.addClass("text-danger"):Y.addClass("text-danger"),E.append(Y),++G>=7&&(G=0,H+=E[0].outerHTML,isTrAppended=!0,E=e("<tr />"));return isTrAppended||(H+=E[0].outerHTML,isTrAppended=!0),l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=(l=l.replace(/{{currentMonthInfo}}/gim,O)).replace(/{{selectedYear}}/gim,u)).replace(/{{selectedMonthName}}/gim,g)).replace(/{{daysHtml}}/gim,H)).replace(/{{previousYearButtonDisabledAttribute}}/gim,ce)).replace(/{{previousYearButtonDateNumber}}/gim,j)).replace(/{{previousMonthButtonDisabledAttribute}}/gim,me)).replace(/{{previousMonthButtonDateNumber}}/gim,$)).replace(/{{selectYearButtonDisabledAttribute}}/gim,ye)).replace(/{{nextMonthButtonDisabledAttribute}}/gim,Me)).replace(/{{nextMonthButtonDateNumber}}/gim,L)).replace(/{{nextYearButtonDisabledAttribute}}/gim,Se)).replace(/{{nextYearButtonDateNumber}}/gim,R)).replace(/{{dropDownMenuMonth1DateNumber}}/gim,ee.month1DateNumber)).replace(/{{dropDownMenuMonth2DateNumber}}/gim,ee.month2DateNumber)).replace(/{{dropDownMenuMonth3DateNumber}}/gim,ee.month3DateNumber)).replace(/{{dropDownMenuMonth4DateNumber}}/gim,ee.month4DateNumber)).replace(/{{dropDownMenuMonth5DateNumber}}/gim,ee.month5DateNumber)).replace(/{{dropDownMenuMonth6DateNumber}}/gim,ee.month6DateNumber)).replace(/{{dropDownMenuMonth7DateNumber}}/gim,ee.month7DateNumber)).replace(/{{dropDownMenuMonth8DateNumber}}/gim,ee.month8DateNumber)).replace(/{{dropDownMenuMonth9DateNumber}}/gim,ee.month9DateNumber)).replace(/{{dropDownMenuMonth10DateNumber}}/gim,ee.month10DateNumber)).replace(/{{dropDownMenuMonth11DateNumber}}/gim,ee.month11DateNumber)).replace(/{{dropDownMenuMonth12DateNumber}}/gim,ee.month12DateNumber)).replace(/{{selectMonth1ButtonCssClass}}/gim,ee.selectMonth1ButtonCssClass)).replace(/{{selectMonth2ButtonCssClass}}/gim,ee.selectMonth2ButtonCssClass)).replace(/{{selectMonth3ButtonCssClass}}/gim,ee.selectMonth3ButtonCssClass)).replace(/{{selectMonth4ButtonCssClass}}/gim,ee.selectMonth4ButtonCssClass)).replace(/{{selectMonth5ButtonCssClass}}/gim,ee.selectMonth5ButtonCssClass)).replace(/{{selectMonth6ButtonCssClass}}/gim,ee.selectMonth6ButtonCssClass)).replace(/{{selectMonth7ButtonCssClass}}/gim,ee.selectMonth7ButtonCssClass)).replace(/{{selectMonth8ButtonCssClass}}/gim,ee.selectMonth8ButtonCssClass)).replace(/{{selectMonth9ButtonCssClass}}/gim,ee.selectMonth9ButtonCssClass)).replace(/{{selectMonth10ButtonCssClass}}/gim,ee.selectMonth10ButtonCssClass)).replace(/{{selectMonth11ButtonCssClass}}/gim,ee.selectMonth11ButtonCssClass)).replace(/{{selectMonth12ButtonCssClass}}/gim,ee.selectMonth12ButtonCssClass)}e(document).on("click",u+" [data-day]",function(){var t=e(this),a=t.attr("disabled"),r=Number(t.attr("data-number")),n=j(t),o=void 0==n.selectedDate?void 0:ue(n.selectedDate),i=be(n.selectedDateToShow);if(!a){if(i=me(r,i,n),n.rangeSelector)return void 0!=n.rangeSelectorStartDate&&void 0!=n.rangeSelectorEndDate&&(n.rangeSelectorStartDate=void 0,n.rangeSelectorEndDate=void 0,t.parents("table:last").find("td.selected-range-days-start-end,td.selected-range-days").removeClass("selected-range-days").removeClass("selected-range-days-start-end")),void 0==n.rangeSelectorStartDate?(t.addClass("selected-range-days-start-end"),n.rangeSelectorStartDate=be(i),n.selectedDate=be(i),n.selectedDateToShow=be(i)):void 0!=n.rangeSelectorStartDate&&void 0==n.rangeSelectorEndDate&&(t.addClass("selected-range-days-start-end"),n.rangeSelectorEndDate=be(i),z(n)),R(t,n),void(void 0!=n.rangeSelectorStartDate&&void 0!=n.rangeSelectorEndDate&&(n.inLine?U(t,n):ne(e(m))));n.selectedDate=be(i),n.selectedDateToShow=be(i),void 0!=o&&(n.selectedDate.setHours(o.hour),n.selectedDate.setMinutes(o.minute),n.selectedDate.setSeconds(o.second)),R(t,n),z(n),n.inLine?U(t,n):ne(e(m))}}),e(document).on("mouseenter",u+" [data-day],"+u+" [data-nm],"+u+" [data-pm]",function(){var t=e(this),a=t.parents("table:last").find("td[data-day]"),r=t.attr("disabled"),n=Number(t.attr("data-number")),o=j(t);if(!r&&o.rangeSelector&&(void 0==o.rangeSelectorStartDate||void 0==o.rangeSelectorEndDate)){a.removeClass("selected-range-days");var i=o.rangeSelectorStartDate?be(o.rangeSelectorStartDate):void 0,s=o.rangeSelectorEndDate?be(o.rangeSelectorEndDate):void 0,d=0,l=0;if(o.isGregorian?(d=i?se(i):0,l=s?se(s):0):(d=i?oe(ge(i)):0,l=s?oe(ge(s)):0),d>0&&n>d)for(var c=d;c<=n;c++)a.filter('[data-number="'+c.toString()+'"]:not(.selected-range-days-start-end)').addClass("selected-range-days");else if(l>0&&n<l)for(var m=n;m<=l;m++)a.filter('[data-number="'+m.toString()+'"]:not(.selected-range-days-start-end)').addClass("selected-range-days")}}),e(document).on("click",u+" [data-changedatebutton]",function(){var t=e(this),a=t.attr("disabled"),r=Number(t.attr("data-number")),n=j(t),o=be(n.selectedDateToShow);a||(o=me(r,o,n),n.selectedDateToShow=be(o),R(t,n),U(t,n))}),e(document).on("blur",u+" input[data-clock]",function(){var t=e(this),a=t.parents(u+":first"),r=a.find('input[type="number"][data-clock="hour"]'),n=a.find('input[type="number"][data-clock="minute"]'),o=a.find('input[type="number"][data-clock="second"]'),i=Number(r.val()),s=Number(n.val()),d=Number(o.val()),l=j(t);l.enableTimePicker&&(void 0==l.selectedDateToShow&&(l.selectedDateToShow=new Date),i=K(i)?i:l.selectedDateToShow.getHours(),s=K(s)?s:l.selectedDateToShow.getMinutes(),d=K(d)?d:l.selectedDateToShow.getSeconds(),void 0==l.selectedDate&&(l.selectedDate=new Date),l.selectedDate=new Date(l.selectedDate.setHours(i)),l.selectedDate=new Date(l.selectedDate.setMinutes(s)),l.selectedDate=new Date(l.selectedDate.setSeconds(d)),R(t,l),z(l))}),e(document).on("click",u+" [select-year-button]",function(){e(this).parents(u+":first").find(".select-year-box").removeClass("w-0")}),e(document).on("click",u+" [data-go-today]",function(){var t=e(this),a=j(t);a.selectedDateToShow=new Date,R(t,a),U(t,a)}),e("html").on("click",function(t){h||L(e(t.target)).length>=1||ne(e(m))});var we={init:function(t){return this.each(function(){var a=e(this),r=e.extend({englishNumber:!1,placement:"bottom",trigger:"click",enableTimePicker:!1,targetTextSelector:"",targetDateSelector:"",toDate:!1,fromDate:!1,groupId:"",disabled:!1,textFormat:"",dateFormat:"",isGregorian:!1,inLine:!1,selectedDate:void 0,selectedDateToShow:new Date,monthsToShow:[0,0],yearOffset:30,holiDays:[],disabledDates:[],disableBeforeToday:!1,disableAfterToday:!1,disableBeforeDate:void 0,disableAfterDate:void 0,rangeSelector:!1,rangeSelectorStartDate:void 0,rangeSelectorEndDate:void 0},t);if(a.attr("data-mdpersiandatetimepicker",""),r.targetDateSelector){var n=r.targetDateSelector.val();n&&(r.selectedDate=new Date(Date.parse(n)),r.selectedDateToShow=be(r.selectedDate))}else if(r.targetTextSelector){var o=e(r.targetTextSelector).val();o&&(r.selectedDate=Me(o,r),r.selectedDateToShow=be(r.selectedDate))}if(r.rangeSelector&&(r.fromDate=!1,r.toDate=!1,r.enableTimePicker=!1),(r.fromDate||r.toDate)&&r.groupId&&(a.attr(c,r.groupId),r.toDate?a.attr("data-toDate",""):r.fromDate&&a.attr("data-fromDate","")),r.isGregorian&&(r.englishNumber=!0),r.toDate&&r.fromDate)throw new Error("MdPersianDateTimePicker => You can not set true 'toDate' and 'fromDate' together");if(!r.groupId&&(r.toDate||r.fromDate))throw new Error("MdPersianDateTimePicker => When you set 'toDate' or 'fromDate' true, you have to set 'groupId'");r.disable&&a.attr("disabled",""),r.enableTimePicker&&!r.textFormat?r.textFormat="yyyy/MM/dd   HH:mm:ss":r.enableTimePicker||r.textFormat||(r.textFormat="yyyy/MM/dd"),r.enableTimePicker&&!r.dateFormat?r.dateFormat="yyyy/MM/dd   HH:mm:ss":r.enableTimePicker||r.dateFormat||(r.dateFormat="yyyy/MM/dd"),a.data(g,r),void 0!=r.selectedDate&&(z(r),triggerChangeCalling=!1),r.inLine?a.append(Se(r)):a.popover({container:"body",content:"",html:!0,placement:r.placement,title:" ",trigger:"manual",template:'\n<div class="popover mds-bootstrap-persian-datetime-picker-popover" role="tooltip" data-mdpersiandatetimepicker-popover>\n    <div class="arrow"></div>\n    <h3 class="popover-header text-center" data-name="mds-datetimepicker-title"></h3>\n    <div class="popover-body p-0" data-name="mds-datetimepicker-popoverbody"></div>\n</div>'}).on(r.trigger,function(){var t,n;h=!0,a=e(this),(r=a.data(g)).disabled||(t=a,e(m).each(function(){var a=e(this);!t&&t.is(a)||ne(a)}),(n=a)&&n.popover("show"),setTimeout(function(){r.selectedDateToShow=void 0!=r.selectedDate?be(r.selectedDate):new Date;var t=Se(r),n=e(t).find("[data-selecteddatestring]").text().trim();e("#"+a.attr("aria-describedby")).find('[data-name="mds-datetimepicker-title"]').html(n),e("#"+a.attr("aria-describedby")).find('[data-name="mds-datetimepicker-popoverbody"]').html(t),a.popover("update"),h=!1},10))}),r.targetTextSelector&&r.targetTextSelector.on("change",function(){if(triggerChangeCalling)setTimeout(function(){triggerChangeCalling=!1},100);else{var t=e(this).val();if(t)try{if(r.rangeSelector){let e=t.split(" - ");a.MdPersianDateTimePicker("setDateRange",Me(e[0],r),Me(e[1],r))}else a.MdPersianDateTimePicker("setDate",Me(t,r))}catch(e){z(r)}else a.MdPersianDateTimePicker("clearDate")}})})},getText:function(){return q(W(e(this)))},getDate:function(){return W(e(this)).selectedDate},getDateRange:function(){var t=W(e(this));if(t.rangeSelector)return[t.rangeSelectorStartDate,t.rangeSelectorEndDate];if(!t.toDate&&!t.fromDate||!t.groupId)return[];var a=W(e("["+c+'="'+t.groupId+'"][data-fromDate]')),r=W(e("["+c+'="'+t.groupId+'"][data-toDate]'));return[a.selectedDate,r.selectedDate]},setDate:function(t){if(void 0==t)throw new Error("MdPersianDateTimePicker => setDate => مقدار ورودی نا معتبر است");var a=e(this),r=W(a);r.selectedDate=be(t),J(a,r),z(r)},setOption:function(t,a){if(!t)throw new Error("MdPersianDateTimePicker => setOption => name parameter مقدار ورودی نا معتبر است");var r=e(this),n=W(r);n[t]=a,J(r,n)},setDateRange:function(t,a){if(void 0==t||void 0==a)throw new Error("MdPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است");if(t.getTime()>=a.getTime())throw new Error("MdPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است, تاریخ شروع باید بزرگتر از تاریخ پایان باشد");var r=e(this),n=W(r);if(n.rangeSelector)n.selectedDate=t,n.rangeSelectorStartDate=t,n.rangeSelectorEndDate=a,J(r,n),z(n);else if((n.fromDate||n.toDate)&&n.groupId){var o=e("["+c+'="'+n.groupId+'"][data-toDate]'),i=e("["+c+'="'+n.groupId+'"][data-fromDate]');if(i.length>0){var s=W(i);s.selectedDate=t,J(i,s),z(s)}if(o.length>0){var d=W(o);d.selectedDate=a,J(o,d),z(d)}}},clearDate:function(){var t=e(this),a=W(t);a.selectedDate=void 0,J(t,a),z(a)},setDatePersian:function(t){if(void 0==t)throw new Error("MdPersianDateTimePicker => setDatePersian => ورودی باید از نوه جی سان با حداقل پراپرتی های year, month, day باشد");t.hour=t.hour?t.hour:0,t.minute=t.hour?t.minute:0,t.second=t.second?t.second:0;var a=e(this),r=W(a);r.selectedDate=le(t),J(a,r),z(r)},hide:function(){ne(e(this))},show:function(){var t=W(e(this));e(this).trigger(t.trigger)},disable:function(t){var a=e(this),r=W(a);r.disabled=t,J(a,r),t?a.attr("disabled",""):a.removeAttr("disabled")},changeType:function(t,a){var r=e(this),n=W(r);ne(r),n.isGregorian=t,n.englishNumber=a,n.isGregorian&&(n.englishNumber=!0),J(r,n),z(n)}};e.fn.MdPersianDateTimePicker=function(t){return we[t]?we[t].apply(this,Array.prototype.slice.call(arguments,1)):"object"!=typeof t&&t?(e.error("Method "+t+" does not exist in jquery.Bootstrap-PersianDateTimePicker"),!1):we.init.apply(this,arguments)}}(jQuery);
+(function ($) {
+
+    // #region jalali calendar
+
+    function toJalaali(gy, gm, gd) {
+        return d2j(g2d(gy, gm, gd));
+    }
+
+    function toGregorian(jy, jm, jd) {
+        return d2g(j2d(jy, jm, jd));
+    }
+
+    function isValidJalaaliDate(jy, jm, jd) {
+        return jy >= -61 && jy <= 3177 &&
+            jm >= 1 && jm <= 12 &&
+            jd >= 1 && jd <= jalaaliMonthLength(jy, jm);
+    }
+
+    function isLeapJalaaliYear(jy) {
+        return jalCal(jy).leap === 0;
+    }
+
+    function jalaaliMonthLength(jy, jm) {
+        if (jm <= 6) return 31;
+        if (jm <= 11) return 30;
+        if (isLeapJalaaliYear(jy)) return 30;
+        return 29;
+    }
+
+    function jalCal(jy) {
+        // Jalaali years starting the 33-year rule.
+        var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178],
+            bl = breaks.length,
+            gy = jy + 621,
+            leapJ = -14,
+            jp = breaks[0],
+            jm,
+            jump = 1,
+            leap,
+            n,
+            i;
+
+        if (jy < jp || jy >= breaks[bl - 1])
+            throw new Error('Invalid Jalaali year ' + jy);
+
+        // Find the limiting years for the Jalaali year jy.
+        for (i = 1; i < bl; i += 1) {
+            jm = breaks[i];
+            jump = jm - jp;
+            if (jy < jm)
+                break;
+            leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4);
+            jp = jm;
+        }
+        n = jy - jp;
+
+        // Find the number of leap years from AD 621 to the beginning
+        // of the current Jalaali year in the Persian calendar.
+        leapJ = leapJ + div(n, 33) * 8 + div(mod(n, 33) + 3, 4);
+        if (mod(jump, 33) === 4 && jump - n === 4)
+            leapJ += 1;
+
+        // And the same in the Gregorian calendar (until the year gy).
+        var leapG = div(gy, 4) - div((div(gy, 100) + 1) * 3, 4) - 150;
+
+        // Determine the Gregorian date of Farvardin the 1st.
+        var march = 20 + leapJ - leapG;
+
+        // Find how many years have passed since the last leap year.
+        if (jump - n < 6)
+            n = n - jump + div(jump + 4, 33) * 33;
+        leap = mod(mod(n + 1, 33) - 1, 4);
+        if (leap === -1) leap = 4;
+
+        return {
+            leap: leap,
+            gy: gy,
+            march: march
+        };
+    }
+
+    function j2d(jy, jm, jd) {
+        var r = jalCal(jy);
+        return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1;
+    }
+
+    function d2j(jdn) {
+        var gy = d2g(jdn).gy, // Calculate Gregorian year (gy).
+            jy = gy - 621,
+            r = jalCal(jy),
+            jdn1F = g2d(gy, 3, r.march),
+            jd,
+            jm,
+            k;
+
+        // Find number of days that passed since 1 Farvardin.
+        k = jdn - jdn1F;
+        if (k >= 0) {
+            if (k <= 185) {
+                // The first 6 months.
+                jm = 1 + div(k, 31);
+                jd = mod(k, 31) + 1;
+                return {
+                    jy: jy,
+                    jm: jm,
+                    jd: jd
+                };
+            } else {
+                // The remaining months.
+                k -= 186;
+            }
+        } else {
+            // Previous Jalaali year.
+            jy -= 1;
+            k += 179;
+            if (r.leap === 1)
+                k += 1;
+        }
+        jm = 7 + div(k, 30);
+        jd = mod(k, 30) + 1;
+        return {
+            jy: jy,
+            jm: jm,
+            jd: jd
+        };
+    }
+
+    function g2d(gy, gm, gd) {
+        var d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4) +
+            div(153 * mod(gm + 9, 12) + 2, 5) +
+            gd - 34840408;
+        d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752;
+        return d;
+    }
+
+    function d2g(jdn) {
+        var j;
+        j = 4 * jdn + 139361631;
+        j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+        var i = div(mod(j, 1461), 4) * 5 + 308;
+        var gd = div(mod(i, 153), 5) + 1;
+        var gm = mod(div(i, 153), 12) + 1;
+        var gy = div(j, 1461) - 100100 + div(8 - gm, 6);
+        return {
+            gy: gy,
+            gm: gm,
+            gd: gd
+        };
+    }
+
+    function div(a, b) {
+        return ~~(a / b);
+    }
+
+    function mod(a, b) {
+        return a - ~~(a / b) * b;
+    }
+
+    //#endregion jalali calendar
+
+    // #region variables
+
+    var mdDatePickerFlag = 'data-mdpersiandatetimepicker',
+        mdDatePickerFlagSelector = '[' + mdDatePickerFlag + ']',
+        mdDatePickerGroupIdAttribute = 'data-mdpersiandatetimepicker-group',
+        mdDatePickerPopoverFlag = 'data-mdpersiandatetimepicker-popover',
+        mdDatePickerPopoverSelector = '[' + mdDatePickerPopoverFlag + ']',
+        mdDatePickerContainerFlag = 'data-mdpersiandatetimepicker-container',
+        mdDatePickerContainerSelector = '[' + mdDatePickerContainerFlag + ']',
+        mdPluginName = 'MdPersianDateTimePicker',
+        triggerStart = false;
+
+    var popverHtmlTemplate = `
+<div class="popover mds-bootstrap-persian-datetime-picker-popover" role="tooltip" ${mdDatePickerPopoverFlag}>
+    <div class="arrow"></div>
+    <h3 class="popover-header text-center" data-name="mds-datetimepicker-title"></h3>
+    <div class="popover-body p-0" data-name="mds-datetimepicker-popoverbody"></div>
+</div>`;
+
+    var dateTimePickerHtmlTemplate = `<div class="mds-bootstrap-persian-datetime-picker-container {{rtlCssClass}}" ${mdDatePickerContainerFlag}>
+    <div class="select-year-box w-0">
+        <div class="container-fluid">
+            <div class="row no-gutters">
+                {{yearsToSelectHtml}}
+            </div>
+        </div>
+    </div>
+    <table class="table table-sm text-center p-0 m-0">
+        <thead>
+        <tr {{selectedDateStringAttribute}}>
+            <th colspan="100" data-selecteddatestring>{{selectedDateString}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {{monthsTdHtml}}
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr {{timePickerAttribute}}>
+            <td colspan="100" class="border-0">
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="number" title="{{hourText}}" value="{{hour}}" maxlength="2" data-clock="hour"/>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" title="{{minuteText}}" value="{{minute}}" maxlength="2" data-clock="minute"/>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" title="{{secondText}}" value="{{second}}" maxlength="2" data-clock="second"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100">
+                <button type="button" class="btn btn-light" title="{{goTodayText}}" data-go-today>{{todayDateString}}</button>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>`;
+
+    var dateTimePickerMonthTableHtmlTemplate = `<td class="border-0" style="{{monthTdStyle}}" {{monthTdAttribute}} data-td-month>
+    <table class="table table-sm table-striped table-borderless">
+        <thead>
+        <tr {{monthNameAttribute}}>
+            <th colspan="100" class="border-0">
+                <table class="table table-sm table-borderless">
+                    <thead>
+                    <tr>
+                        <th>
+                            <button type="button" class="btn btn-light"> {{currentMonthInfo}}</button>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </th>
+        </tr>
+        <tr {{theadSelectDateButtonTrAttribute}}>
+            <td colspan="100" class="border-0">
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{previousYearText}}" data-changedatebutton data-number="{{previousYearButtonDateNumber}}" {{previousYearButtonDisabledAttribute}}> &lt;&lt;</button>
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{previousMonthText}}" data-changedatebutton data-number="{{previousMonthButtonDateNumber}}" {{previousMonthButtonDisabledAttribute}}> &lt;</button>
+                        </th>
+                        <th style="width: 120px;">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-light btn-sm dropdown-toggle" id="mdsBootstrapPersianDatetimePickerMonthSelectorButon"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{selectedMonthName}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="mdsBootstrapPersianDatetimePickerMonthSelectorButon">
+                                    <a class="dropdown-item {{selectMonth1ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth1DateNumber}}">{{monthName1}}</a>
+                                    <a class="dropdown-item {{selectMonth2ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth2DateNumber}}">{{monthName2}}</a>
+                                    <a class="dropdown-item {{selectMonth3ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth3DateNumber}}">{{monthName3}}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item {{selectMonth4ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth4DateNumber}}">{{monthName4}}</a>
+                                    <a class="dropdown-item {{selectMonth5ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth5DateNumber}}">{{monthName5}}</a>
+                                    <a class="dropdown-item {{selectMonth6ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth6DateNumber}}">{{monthName6}}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item {{selectMonth7ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth7DateNumber}}">{{monthName7}}</a>
+                                    <a class="dropdown-item {{selectMonth8ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth8DateNumber}}">{{monthName8}}</a>
+                                    <a class="dropdown-item {{selectMonth9ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth9DateNumber}}">{{monthName9}}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item {{selectMonth10ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth10DateNumber}}">{{monthName10}}</a>
+                                    <a class="dropdown-item {{selectMonth11ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth11DateNumber}}">{{monthName11}}</a>
+                                    <a class="dropdown-item {{selectMonth12ButtonCssClass}}" data-changedatebutton data-number="{{dropDownMenuMonth12DateNumber}}">{{monthName12}}</a>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 50px;">
+                            <button type="button" class="btn btn-light btn-sm" select-year-button {{selectYearButtonDisabledAttribute}}>{{selectedYear}}</button>
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{nextMonthText}}" data-changedatebutton data-number="{{nextMonthButtonDateNumber}}" {{nextMonthButtonDisabledAttribute}}> &gt;</button>
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-light btn-sm" title="{{nextYearText}}" data-changedatebutton data-number="{{nextYearButtonDateNumber}}" {{nextYearButtonDisabledAttribute}}> &gt;&gt;</button>
+                        </th>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </thead>
+        <tbody class="days">
+        <tr>
+            <td class="{{weekDayShortName1CssClass}}">{{weekDayShortName1}}</td>
+            <td>{{weekDayShortName2}}</td>
+            <td>{{weekDayShortName3}}</td>
+            <td>{{weekDayShortName4}}</td>
+            <td>{{weekDayShortName5}}</td>
+            <td>{{weekDayShortName6}}</td>
+            <td class="{{weekDayShortName7CssClass}}">{{weekDayShortName7}}</td>
+        </tr>
+        {{daysHtml}}
+        </tbody>
+    </table>
+</td>
+    `;
+
+    triggerChangeCalling = false;
+    var previousYearTextPersian = 'سال قبل',
+        previousMonthTextPersian = 'ماه قبل',
+        nextYearTextPersian = 'سال بعد',
+        nextMonthTextPersian = 'ماه بعد',
+        hourTextPersian = 'ساعت',
+        minuteTextPersian = 'دقیقه',
+        secondTextPersian = 'ثانیه',
+        goTodayTextPersian = 'برو به امروز',
+        previousYearText = 'Previous Year',
+        previousMonthText = 'Previous Month',
+        nextYearText = 'Next Year',
+        nextMonthText = 'Next Month',
+        goTodayText = 'Go Today',
+        hourText = 'Hour',
+        minuteText = 'Minute',
+        secondText = 'Second',
+        amPm = {
+            am: 0,
+            pm: 1,
+            none: 2
+        },
+        shortDayNamesPersian = [
+            'ش',
+            'ی',
+            'د',
+            'س',
+            'چ',
+            'پ',
+            'ج',
+        ],
+        shortDayNames = [
+            'SU',
+            'MO',
+            'TU',
+            'WE',
+            'TH',
+            'FR',
+            'SA',
+        ],
+        monthNamesPersian = [
+            'فروردین',
+            'اردیبهشت',
+            'خرداد',
+            'تیر',
+            'مرداد',
+            'شهریور',
+            'مهر',
+            'آبان',
+            'آذر',
+            'دی',
+            'بهمن',
+            'اسفند'
+        ],
+        monthNames = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ],
+        weekDayNames = [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
+        ],
+        weekDayNamesPersian = [
+            'یک شنبه',
+            'دوشنبه',
+            'سه شنبه',
+            'چهارشنبه',
+            'پنج شنبه',
+            'جمعه',
+            'شنبه'
+        ];
+
+    //#endregion
+
+    // #region Functions
+
+    function getPopoverDescriber($element) {
+        // المانی را بر میگرداند که کاربر پلاگین را روی آن فعال کرده است
+        var $popoverDescriber = $element.parents(mdDatePickerFlagSelector + ':first'); // inline
+        // not inline
+        if ($popoverDescriber.length <= 0) {
+            $popoverDescriber = $element.parents(mdDatePickerPopoverSelector + ':first');
+            $popoverDescriber = $('[aria-describedby="' + $popoverDescriber.attr('id') + '"]');
+        }
+        return $popoverDescriber;
+    }
+
+    function getSetting1($element) {
+        return getPopoverDescriber($element).data(mdPluginName);
+    }
+
+    function getSetting2($popoverDescriber) {
+        return $popoverDescriber.data(mdPluginName);
+    }
+
+    function setSetting1($element, setting) {
+        return getPopoverDescriber($element).data(mdPluginName, setting);
+    }
+
+    function setSetting2($popoverDescriber, setting) {
+        return $popoverDescriber.data(mdPluginName, setting);
+    }
+
+    function updateCalendarHtml1($element, setting) {
+        var calendarHtml = getDateTimePickerHtml(setting),
+            $container = setting.inLine ? $element.parents(mdDatePickerFlagSelector + ':first') : $element.parents('[data-name="mds-datetimepicker-popoverbody"]:first');
+        $container.html(calendarHtml);
+    }
+
+    function getSelectedDateTimeTextFormatted(setting) {
+        if (setting.selectedDate == undefined) return '';
+        if (setting.rangeSelector && setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate != undefined)
+            return getDateTimeString(!setting.isGregorian ? getDateTimeJsonPersian1(setting.rangeSelectorStartDate) : getDateTimeJson1(setting.rangeSelectorStartDate), setting.textFormat, setting.isGregorian, setting.englishNumber) + ' - ' +
+                getDateTimeString(!setting.isGregorian ? getDateTimeJsonPersian1(setting.rangeSelectorEndDate) : getDateTimeJson1(setting.rangeSelectorEndDate), setting.textFormat, setting.isGregorian, setting.englishNumber);
+        return getDateTimeString(!setting.isGregorian ? getDateTimeJsonPersian1(setting.selectedDate) : getDateTimeJson1(setting.selectedDate), setting.textFormat, setting.isGregorian, setting.englishNumber);
+    }
+
+    function getSelectedDateTimeFormatted(setting) {
+        if (setting.selectedDate == undefined) return '';
+        if (setting.rangeSelector && setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate != undefined)
+            return getDateTimeString(getDateTimeJson1(setting.rangeSelectorStartDate), setting.dateFormat, setting.isGregorian, true) + ' - ' +
+                getDateTimeString(getDateTimeJson1(setting.rangeSelectorEndDate), setting.dateFormat, setting.isGregorian, true);
+        return getDateTimeString(getDateTimeJson1(setting.selectedDate), setting.dateFormat, setting.isGregorian, true);
+    }
+
+    function setSelectedData(setting) {
+        var $targetText = $(setting.targetTextSelector);
+        if ($targetText.length > 0) {
+            switch ($targetText[0].tagName.toLowerCase()) {
+                case 'input':
+                    $targetText.val(getSelectedDateTimeTextFormatted(setting));
+                    triggerChangeCalling = true;
+                    $targetText.trigger('change');
+                    break;
+                default:
+                    $targetText.text(getSelectedDateTimeTextFormatted(setting));
+                    triggerChangeCalling = true;
+                    $targetText.trigger('change');
+                    break;
+            }
+        }
+        var $targetDate = setting.targetDateSelector;
+        if ($targetDate.length > 0) {
+            switch ($targetDate[0].tagName.toLowerCase()) {
+                case 'input':
+                    $targetDate.val(getSelectedDateTimeFormatted(setting));
+                    triggerChangeCalling = true;
+                    $targetDate.trigger('change');
+                    break;
+                default:
+                    $targetDate.text(getSelectedDateTimeFormatted(setting));
+                    triggerChangeCalling = true;
+                    $targetDate.trigger('change');
+                    break;
+            }
+        }
+    }
+
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function toPersianNumber(inputNumber1) {
+        /* ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹ */
+        if (!inputNumber1) return '';
+        var str1 = inputNumber1.toString().trim();
+        if (!str1) return '';
+        str1 = str1.replace(/0/img, '۰');
+        str1 = str1.replace(/1/img, '۱');
+        str1 = str1.replace(/2/img, '۲');
+        str1 = str1.replace(/3/img, '۳');
+        str1 = str1.replace(/4/img, '۴');
+        str1 = str1.replace(/5/img, '۵');
+        str1 = str1.replace(/6/img, '۶');
+        str1 = str1.replace(/7/img, '۷');
+        str1 = str1.replace(/8/img, '۸');
+        str1 = str1.replace(/9/img, '۹');
+        return str1;
+    }
+
+    function toEnglishNumber(inputNumber2) {
+        if (!inputNumber2) return '';
+        var str = inputNumber2.toString().trim();
+        if (!str) return '';
+        str = str.replace(/۰/img, '0');
+        str = str.replace(/۱/img, '1');
+        str = str.replace(/۲/img, '2');
+        str = str.replace(/۳/img, '3');
+        str = str.replace(/۴/img, '4');
+        str = str.replace(/۵/img, '5');
+        str = str.replace(/۶/img, '6');
+        str = str.replace(/۷/img, '7');
+        str = str.replace(/۸/img, '8');
+        str = str.replace(/۹/img, '9');
+        return str;
+    }
+
+    function getMonthName(monthIndex, isGregorian) {
+        if (!isGregorian) return monthNamesPersian[monthIndex];
+        return monthNames[monthIndex];
+    }
+
+    function addMonthToDateTimeJson(dateTimeJson, addedMonth, isGregorian) {
+        // وقتی نیاز هست تا ماه یا روز به تاریخی اضافه کنم
+        // پس از اضافه کردن ماه یا روز این متد را استفاده میکنم تا سال و ماه
+        // با مقادیر جدید تصحیح و برگشت داده شوند
+        var dateTimeJson1 = $.extend({}, dateTimeJson);
+        dateTimeJson1.day = 1;
+        dateTimeJson1.month += addedMonth;
+        if (!isGregorian) {
+            if (dateTimeJson1.month <= 0) {
+                dateTimeJson1.month = 12;
+                dateTimeJson1.year--;
+            }
+            if (dateTimeJson1.month > 12) {
+                dateTimeJson1.year++;
+                dateTimeJson1.month = 1;
+            }
+            return dateTimeJson1;
+        }
+        return getDateTimeJson1(getDateTime3(dateTimeJson1));
+    }
+
+    function addMonthToDateTime(dateTime, addedMonth, isGregorian) {
+        var dateTimeJson = {};
+        if (!isGregorian) {
+            dateTimeJson = getDateTimeJsonPersian1(dateTime);
+            dateTimeJson = addMonthToDateTimeJson(dateTimeJson, addedMonth, isGregorian);
+            return getDateTime2(dateTimeJson);
+        }
+        dateTimeJson = getDateTimeJson1(dateTime);
+        dateTimeJson = addMonthToDateTimeJson(dateTimeJson, addedMonth, isGregorian);
+        return getDateTime3(dateTimeJson);
+    }
+
+    function getWeekDayName(englishWeekDayIndex, isGregorian) {
+        if (!isGregorian) return weekDayNamesPersian[englishWeekDayIndex];
+        return weekDayNames[englishWeekDayIndex];
+    }
+
+    function getWeekDayShortName(englishWeekDayIndex, isGregorian) {
+        if (!isGregorian) return shortDayNamesPersian[englishWeekDayIndex];
+        return shortDayNames[englishWeekDayIndex];
+    }
+
+    function getShortHour(hour) {
+        var shortHour;
+        if (hour > 12)
+            shortHour = hour - 12;
+        else
+            shortHour = hour;
+        return shortHour;
+    }
+
+    function getAmPm(hour, isGregorian) {
+        var amPm;
+        if (hour > 12) {
+            if (isGregorian)
+                amPm = 'PM';
+            else
+                amPm = 'ب.ظ';
+        } else if (isGregorian)
+            amPm = 'AM';
+        else
+            amPm = 'ق.ظ';
+        return amPm;
+    }
+
+    function hideOthers($exceptThis) {
+        $(mdDatePickerPopoverSelector).each(function () {
+            var $thisPopover = $(this);
+            if (!$exceptThis && $exceptThis.is($thisPopover)) return;
+            hidePopover($thisPopover);
+        });
+    }
+
+    function showPopover($element) {
+        if (!$element) return;
+        $element.popover('show');
+    }
+
+    function hidePopover($element) {
+        if (!$element) return;
+        $element.popover('hide');
+    }
+
+    function convertToNumber1(dateTimeJson) {
+        return Number(zeroPad(dateTimeJson.year) + zeroPad(dateTimeJson.month) + zeroPad(dateTimeJson.day));
+    }
+
+    function convertToNumber2(year, month, day) {
+        return Number(zeroPad(year) + zeroPad(month) + zeroPad(day));
+    }
+
+    function convertToNumber3(dateTime) {
+        return convertToNumber1(getDateTimeJson1(dateTime));
+    }
+
+    function getDateTime1(yearPersian, monthPersian, dayPersian, hour, minute, second) {
+        if (!isNumber(hour)) hour = 0;
+        if (!isNumber(minute)) minute = 0;
+        if (!isNumber(second)) second = 0;
+        var gregorian = toGregorian(yearPersian, monthPersian, dayPersian);
+        return new Date(gregorian.gy, gregorian.gm - 1, gregorian.gd, hour, minute, second);
+    }
+
+    function getDateTime2(dateTimeJsonPersian) {
+        if (!dateTimeJsonPersian.hour) dateTimeJsonPersian.hour = 0;
+        if (!dateTimeJsonPersian.minute) dateTimeJsonPersian.minute = 0;
+        if (!dateTimeJsonPersian.second) dateTimeJsonPersian.second = 0;
+        var gregorian = toGregorian(dateTimeJsonPersian.year, dateTimeJsonPersian.month, dateTimeJsonPersian.day);
+        return new Date(gregorian.gy, gregorian.gm - 1, gregorian.gd, dateTimeJsonPersian.hour, dateTimeJsonPersian.minute, dateTimeJsonPersian.second);
+    }
+
+    function getDateTime3(dateTimeJson) {
+        return new Date(dateTimeJson.year, dateTimeJson.month - 1, dateTimeJson.day, dateTimeJson.hour, dateTimeJson.minute, dateTimeJson.second);
+    }
+
+    function getDateTime4(dateNumber, dateTime, setting) {
+        var dateTimeJson = getDateTimeJson2(dateNumber);
+        if (!setting.isGregorian) {
+            var dateTimeJsonPersian = getDateTimeJsonPersian1(dateTime);
+            dateTimeJsonPersian.year = dateTimeJson.year;
+            dateTimeJsonPersian.month = dateTimeJson.month;
+            dateTimeJsonPersian.day = dateTimeJson.day;
+            dateTime = getDateTime2(dateTimeJsonPersian);
+        } else
+            dateTime = new Date(dateTimeJson.year, dateTimeJson.month - 1, dateTimeJson.day);
+        return dateTime;
+    }
+
+    function getDateTimeJson1(dateTime) {
+        return {
+            year: dateTime.getFullYear(),
+            month: dateTime.getMonth() + 1,
+            day: dateTime.getDate(),
+            hour: dateTime.getHours(),
+            minute: dateTime.getMinutes(),
+            second: dateTime.getSeconds(),
+            dayOfWeek: dateTime.getDay()
+        };
+    }
+
+    function getDateTimeJson2(dateNumber) {
+        return {
+            year: Math.floor(dateNumber / 10000),
+            month: Math.floor(dateNumber / 100) % 100,
+            day: dateNumber % 100,
+            hour: 0,
+            minute: 0,
+            second: 0
+        };
+    }
+
+    function getDateTimeJsonPersian1(dateTime) {
+        var persianDate = toJalaali(dateTime.getFullYear(), dateTime.getMonth() + 1, dateTime.getDate());
+        return {
+            year: persianDate.jy,
+            month: persianDate.jm,
+            day: persianDate.jd,
+            hour: dateTime.getHours(),
+            minute: dateTime.getMinutes(),
+            second: dateTime.getSeconds(),
+            dayOfWeek: dateTime.getDay(),
+        };
+    }
+
+    function getDateTimeJsonPersian2(yearPersian, monthPersian, dayPersian, hour, minute, second) {
+        if (!isNumber(hour)) hour = 0;
+        if (!isNumber(minute)) minute = 0;
+        if (!isNumber(second)) second = 0;
+        var gregorian = toGregorian(yearPersian, monthPersian, dayPersian);
+        return getDateTimeJsonPersian1(new Date(gregorian.gy, gregorian.gm - 1, gregorian.gd, hour, minute, second));
+    }
+
+    function isLeapYear(persianYear) {
+        return isLeapJalaaliYear(persianYear);
+    }
+
+    function getDaysInMonthPersian(year, month) {
+        var numberOfDaysInMonth = 31;
+        if (month > 6 && month < 12)
+            numberOfDaysInMonth = 30;
+        else if (month == 12)
+            numberOfDaysInMonth = isLeapYear(year) ? 30 : 29;
+        return numberOfDaysInMonth;
+    }
+
+    function getDaysInMonth(year, month) {
+        return new Date(year, month + 1, 0).getDate();
+    }
+
+    function getClonedDate(dateTime) {
+        return new Date(dateTime.getTime());
+    }
+
+    function zeroPad(nr, base) {
+        if (nr === undefined || nr === '') return '00';
+        if (base === undefined || base === '') base = '00';
+        var len = (String(base).length - String(nr).length) + 1;
+        return len > 0 ? new Array(len).join('0') + nr : nr;
+    }
+
+    function getDateTimeString(dateTimeJson, format, isGregorian, englishNumber) {
+
+        if (isGregorian) englishNumber = true;
+
+        /// فرمت های که پشتیبانی می شوند
+        /// <para />
+        /// yyyy: سال چهار رقمی
+        /// <para />
+        /// yy: سال دو رقمی
+        /// <para />
+        /// MMMM: نام فارسی ماه
+        /// <para />
+        /// MM: عدد دو رقمی ماه
+        /// <para />
+        /// M: عدد یک رقمی ماه
+        /// <para />
+        /// dddd: نام فارسی روز هفته
+        /// <para />
+        /// dd: عدد دو رقمی روز ماه
+        /// <para />
+        /// d: عدد یک رقمی روز ماه
+        /// <para />
+        /// HH: ساعت دو رقمی با فرمت 00 تا 24
+        /// <para />
+        /// H: ساعت یک رقمی با فرمت 0 تا 24
+        /// <para />
+        /// hh: ساعت دو رقمی با فرمت 00 تا 12
+        /// <para />
+        /// h: ساعت یک رقمی با فرمت 0 تا 12
+        /// <para />
+        /// mm: عدد دو رقمی دقیقه
+        /// <para />
+        /// m: عدد یک رقمی دقیقه
+        /// <para />
+        /// ss: ثانیه دو رقمی
+        /// <para />
+        /// s: ثانیه یک رقمی
+        /// <para />
+        /// fff: میلی ثانیه 3 رقمی
+        /// <para />
+        /// ff: میلی ثانیه 2 رقمی
+        /// <para />
+        /// f: میلی ثانیه یک رقمی
+        /// <para />
+        /// tt: ب.ظ یا ق.ظ
+        /// <para />
+        /// t: حرف اول از ب.ظ یا ق.ظ
+
+        format = format.replace(/yyyy/mg, dateTimeJson.year);
+        format = format.replace(/yy/mg, dateTimeJson.year % 100);
+        format = format.replace(/MMMM/mg, getMonthName(dateTimeJson.month, isGregorian));
+        format = format.replace(/MM/mg, zeroPad(dateTimeJson.month));
+        format = format.replace(/M/mg, dateTimeJson.month);
+        format = format.replace(/dddd/mg, getWeekDayName(dateTimeJson.day, isGregorian));
+        format = format.replace(/dd/mg, zeroPad(dateTimeJson.day));
+        format = format.replace(/d/mg, dateTimeJson.day);
+        format = format.replace(/HH/mg, zeroPad(dateTimeJson.hour));
+        format = format.replace(/H/mg, dateTimeJson.hour);
+        format = format.replace(/hh/mg, zeroPad(getShortHour(dateTimeJson.hour)));
+        format = format.replace(/h/mg, zeroPad(dateTimeJson.hour));
+        format = format.replace(/mm/mg, zeroPad(dateTimeJson.minute));
+        format = format.replace(/m/mg, dateTimeJson.minute);
+        format = format.replace(/ss/mg, zeroPad(dateTimeJson.second));
+        format = format.replace(/s/mg, dateTimeJson.second);
+        format = format.replace(/fff/mg, zeroPad(dateTimeJson.millisecond, '000'));
+        format = format.replace(/ff/mg, zeroPad(dateTimeJson.millisecond / 10));
+        format = format.replace(/f/mg, dateTimeJson.millisecond / 100);
+        format = format.replace(/tt/mg, getAmPm(dateTimeJson.hour, isGregorian));
+        format = format.replace(/t/mg, getAmPm(dateTimeJson.hour, isGregorian)[0]);
+
+        if (!englishNumber) format = toPersianNumber(format);
+        return format;
+    }
+
+    function getLastDayDateOfPreviousMonth(dateTime, isGregorian) {
+        var dateTimeLocal = getClonedDate(dateTime);
+        if (isGregorian) {
+            var previousMonth = new Date(dateTimeLocal.getFullYear(), dateTimeLocal.getMonth() - 1, 1),
+                daysInMonth = getDaysInMonth(previousMonth.getFullYear(), previousMonth.getMonth());
+            return new Date(previousMonth.getFullYear(), previousMonth.getMonth(), daysInMonth);
+        }
+        var dateTimeJsonPersian = getDateTimeJsonPersian1(dateTimeLocal);
+        dateTimeJsonPersian.month += -1;
+        if (dateTimeJsonPersian.month <= 0) {
+            dateTimeJsonPersian.month = 12;
+            dateTimeJsonPersian.year--;
+        } else if (dateTimeJsonPersian.month > 12) {
+            dateTimeJsonPersian.year++;
+            dateTimeJsonPersian.month = 1;
+        }
+        return getDateTime1(dateTimeJsonPersian.year, dateTimeJsonPersian.month, getDaysInMonthPersian(dateTimeJsonPersian.year, dateTimeJsonPersian.month));
+    }
+
+    function getFirstDayDateOfNextMonth(dateTime, isGregorian) {
+        var dateTimeLocal = getClonedDate(dateTime);
+        if (isGregorian) {
+            var nextMonth = new Date(dateTimeLocal.getFullYear(), dateTimeLocal.getMonth() + 1, 1);
+            return new Date(nextMonth.getFullYear(), nextMonth.getMonth(), 1);
+        }
+        var dateTimeJsonPersian = getDateTimeJsonPersian1(dateTimeLocal);
+        dateTimeJsonPersian.month += 1;
+        if (dateTimeJsonPersian.month <= 0) {
+            dateTimeJsonPersian.month = 12;
+            dateTimeJsonPersian.year--;
+        }
+        if (dateTimeJsonPersian.month > 12) {
+            dateTimeJsonPersian.year++;
+            dateTimeJsonPersian.month = 1;
+        }
+        return getDateTime1(dateTimeJsonPersian.year, dateTimeJsonPersian.month, 1);
+    }
+
+    function parsePersianDateTime(persianDateTimeInString, dateSeperatorPattern) {
+        if (!dateSeperatorPattern) dateSeperatorPattern = "\/|-";
+        dateSeperatorPattern = new RegExp(dateSeperatorPattern, 'img');
+        persianDateTimeInString = toEnglishNumber(persianDateTimeInString);
+
+        var month = 0,
+            year = 0,
+            day = 0,
+            hour = 0,
+            minute = 0,
+            second = 0,
+            miliSecond = 0,
+            amPmEnum = amPm.none,
+            containMonthSeperator = dateSeperatorPattern.test(persianDateTimeInString);
+
+        persianDateTimeInString = persianDateTimeInString.replace(/&nbsp;/img, ' ');
+        persianDateTimeInString = persianDateTimeInString.replace(/\s+/img, '-');
+        persianDateTimeInString = persianDateTimeInString.replace(/\\/img, '-');
+        persianDateTimeInString = persianDateTimeInString.replace(/ك/img, 'ک');
+        persianDateTimeInString = persianDateTimeInString.replace(/ي/img, 'ی');
+        persianDateTimeInString = persianDateTimeInString.replace(dateSeperatorPattern, '-');
+        persianDateTimeInString = '-' + persianDateTimeInString + '-';
+
+        // بدست آوردن ب.ظ یا ق.ظ
+        if (persianDateTimeInString.indexOf('ق.ظ') > -1)
+            amPmEnum = amPmEnum.AM;
+        else if (persianDateTimeInString.indexOf('ب.ظ') > -1)
+            amPmEnum = amPmEnum.PM;
+
+        if (persianDateTimeInString.indexOf(':') > -1) // رشته ورودی شامل ساعت نیز هست
+        {
+            persianDateTimeInString = persianDateTimeInString.replace(/-*:-*/img, ':');
+            hour = (persianDateTimeInString.match(/-\d{1,2}(?=:)/img)[0]).replace(/\D+/, '');
+            var minuteAndSecondAndMiliSecondMatch = persianDateTimeInString.match(/:\d{1,2}(?=:?)/img);
+            minute = minuteAndSecondAndMiliSecondMatch[0].replace(/\D+/, '');
+            if (minuteAndSecondAndMiliSecondMatch[1] != undefined)
+                second = minuteAndSecondAndMiliSecondMatch[1].replace(/\D+/, '');
+            if (minuteAndSecondAndMiliSecondMatch[2] != undefined)
+                miliSecond = minuteAndSecondAndMiliSecondMatch[2].replace(/\D+/, '');
+        }
+
+        if (containMonthSeperator) {
+            var monthDayMath = persianDateTimeInString.match(/-\d{1,2}(?=-\d{1,2}[^:]|-)/img);
+
+            // بدست آوردن ماه
+            month = monthDayMath[0].replace(/\D+/, '');
+
+            // بدست آوردن روز
+            day = monthDayMath[1].replace(/\D+/, '');
+
+            // بدست آوردن سال
+            year = (persianDateTimeInString.match(/-\d{2,4}(?=-\d{1,2}[^:])/img)[0]).replace(/\D+/, '');
+        } else {
+            for (var i = 1; i < 12; i++) {
+                var persianMonthName = getMonthName(i - 1, false);
+                if (persianDateTimeInString.indexOf(persianMonthName) > -1) continue;
+                month = i;
+                break;
+            }
+
+            // بدست آوردن روز
+            var dayMatch = persianDateTimeInString.match(/-\d{1,2}(?=-)/img);
+            if (dayMatch != null) {
+                day = dayMatch[0].replace(/\D+/, '');
+                persianDateTimeInString = persianDateTimeInString.replace(new RegExp('-' + day + '(?=-)', 'img'), '-');
+            }
+
+            // بدست آوردن سال
+            var yearMatch = persianDateTimeInString.match(/-\d{4}(?=-)/img);
+            if (yearMatch != null)
+                year = yearMatch[0].replace(/\D+/, '');
+            else {
+                yearMatch = persianDateTimeInString.match(/-\d{2,4}(?=-)/img);
+                if (yearMatch != null)
+                    year = yearMatch[0].replace(/\D+/, '');
+            }
+        }
+
+        var numericYear = Number(year);
+        var numericMonth = Number(month);
+        var numericDay = Number(day);
+        var numericHour = Number(hour);
+        var numericMinute = Number(minute);
+        var numericSecond = Number(second);
+        var numericMiliSecond = Number(miliSecond);
+
+        if (numericYear <= 0)
+            numericYear = persianDateTime[0];
+
+        if (numericMonth <= 0)
+            numericMonth = persianDateTime[1];
+
+        if (numericDay <= 0)
+            numericDay = persianDateTime[2];
+
+        switch (amPmEnum) {
+            case amPmEnum.PM:
+                if (numericHour < 12)
+                    numericHour = numericHour + 12;
+                break;
+            case amPmEnum.AM:
+            case amPmEnum.None:
+                break;
+        }
+
+        return getDateTime1(numericYear, numericMonth, numericDay, numericHour, numericMinute, numericSecond, numericMiliSecond);
+    }
+
+    function parseGregorianDateTime(gregorianDateTimeString) {
+        //بدست آوردن تاریخ قبلی که در تکست باکس وجود داشته
+        gregorianDateTimeString = toEnglishNumber(gregorianDateTimeString);
+        if (!gregorianDateTimeString) {
+            var dateTime = new Date();
+            dateTime.setHours(0);
+            dateTime.setMinutes(0);
+            dateTime.setSeconds(0);
+            dateTime.setMilliseconds(0);
+            return dateTime;
+        }
+        return new Date(gregorianDateTimeString);
+    }
+
+    function parseDateTime(value, setting) {
+        if (!value) return undefined;
+        if (setting.isGregorian) return parseGregorianDateTime(value);
+        return parsePersianDateTime(value);
+    }
+
+    // Get Html of calendar
+
+    function getDateTimePickerHtml(setting) {
+        var selectedDateToShow = getClonedDate(setting.selectedDateToShow),
+            html = dateTimePickerHtmlTemplate;
+
+        html = html.replace(/{{rtlCssClass}}/img, setting.isGregorian ? '' : 'rtl');
+        html = html.replace(/{{selectedDateStringAttribute}}/img, setting.inLine ? '' : 'hidden');
+        html = html.replace(/{{hourText}}/img, setting.isGregorian ? hourText : hourTextPersian);
+        html = html.replace(/{{minuteText}}/img, setting.isGregorian ? minuteText : minuteTextPersian);
+        html = html.replace(/{{secondText}}/img, setting.isGregorian ? secondText : secondTextPersian);
+        html = html.replace(/{{goTodayText}}/img, setting.isGregorian ? goTodayText : goTodayTextPersian);
+        html = html.replace(/{{timePickerAttribute}}/img, setting.enableTimePicker ? '' : 'hidden');
+
+        var yearsToSelectHtml = '',
+            selectedDateString = '',
+            todayDateString = '',
+            todayDateTimeJson = {}, // year, month, day, hour, minute, second
+            rangeSelectorStartDate = !setting.rangeSelector || !setting.rangeSelectorStartDate ? undefined : getClonedDate(setting.rangeSelectorStartDate),
+            rangeSelectorEndDate = !setting.rangeSelector || !setting.rangeSelectorEndDate ? undefined : getClonedDate(setting.rangeSelectorEndDate),
+            rangeSelectorStartDateJson = {},
+            rangeSelectorEndDateJson = {},
+            selectedDateTimeJson = {},
+            selectedDateTimeToShowJson = {},
+            disableBeforeDateTimeJson,
+            disableAfterDateTimeJson;
+
+        if (setting.isGregorian) {
+            selectedDateTimeToShowJson = getDateTimeJson1(selectedDateToShow);
+            todayDateTimeJson = getDateTimeJson1(new Date());
+            rangeSelectorStartDateJson = rangeSelectorStartDate != undefined ? getDateTimeJson1(rangeSelectorStartDate) : undefined;
+            rangeSelectorEndDateJson = rangeSelectorEndDate != undefined ? getDateTimeJson1(rangeSelectorEndDate) : undefined;
+            selectedDateTimeJson = setting.selectedDate == undefined ? todayDateTimeJson : getDateTimeJson1(setting.selectedDate);
+            disableBeforeDateTimeJson = !setting.disableBeforeDate ? undefined : getDateTimeJson1(setting.disableBeforeDate);
+            disableAfterDateTimeJson = !setting.disableAfterDate ? undefined : getDateTimeJson1(setting.disableAfterDate);
+        } else {
+            selectedDateTimeToShowJson = getDateTimeJsonPersian1(selectedDateToShow);
+            todayDateTimeJson = getDateTimeJsonPersian1(new Date());
+            rangeSelectorStartDateJson = rangeSelectorStartDate != undefined ? getDateTimeJsonPersian1(rangeSelectorStartDate) : undefined;
+            rangeSelectorEndDateJson = rangeSelectorEndDate != undefined ? getDateTimeJsonPersian1(rangeSelectorEndDate) : undefined;
+            selectedDateTimeJson = setting.selectedDate == undefined ? todayDateTimeJson : getDateTimeJsonPersian1(setting.selectedDate);
+            disableBeforeDateTimeJson = !setting.disableBeforeDate ? undefined : getDateTimeJsonPersian1(setting.disableBeforeDate);
+            disableAfterDateTimeJson = !setting.disableAfterDate ? undefined : getDateTimeJsonPersian1(setting.disableAfterDate);
+        }
+
+        // بررسی پراپرتی های از تاریخ، تا تاریخ
+        if ((setting.fromDate || setting.toDate) && setting.groupId) {
+            var $toDateElement = $('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-toDate]'),
+                $fromDateElement = $('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-fromDate]');
+            if (setting.fromDate) {
+                var toDateSetting = getSetting2($toDateElement),
+                    toDateSelectedDate = toDateSetting.selectedDate;
+                disableAfterDateTimeJson = !toDateSelectedDate ? undefined : setting.isGregorian ? getDateTimeJson1(toDateSelectedDate) : getDateTimeJsonPersian1(toDateSelectedDate);
+            } else if (setting.toDate) {
+                var fromDateSetting = getSetting2($fromDateElement),
+                    fromDateSelectedDate = fromDateSetting.selectedDate;
+                disableBeforeDateTimeJson = !fromDateSelectedDate ? undefined : setting.isGregorian ? getDateTimeJson1(fromDateSelectedDate) : getDateTimeJsonPersian1(fromDateSelectedDate);
+            }
+        }
+
+        if (setting.rangeSelector && rangeSelectorStartDateJson != undefined && rangeSelectorEndDateJson != undefined) {
+            selectedDateString = `${getWeekDayName(rangeSelectorStartDateJson.dayOfWeek, setting.isGregorian)}، ${rangeSelectorStartDateJson.day} ${getMonthName(rangeSelectorStartDateJson.month - 1, setting.isGregorian)} ${rangeSelectorStartDateJson.year} - 
+                ${getWeekDayName(rangeSelectorEndDateJson.dayOfWeek, setting.isGregorian)}، ${rangeSelectorEndDateJson.day} ${getMonthName(rangeSelectorEndDateJson.month - 1, setting.isGregorian)} ${rangeSelectorEndDateJson.year}`;
+        } else
+            selectedDateString = `${getWeekDayName(selectedDateTimeJson.dayOfWeek, setting.isGregorian)}، ${selectedDateTimeJson.day} ${getMonthName(selectedDateTimeJson.month - 1, setting.isGregorian)} ${selectedDateTimeJson.year}`;
+        todayDateString = `${setting.isGregorian ? 'Today,' : 'امروز،'} ${todayDateTimeJson.day} ${getMonthName(todayDateTimeJson.month - 1, setting.isGregorian)} ${todayDateTimeJson.year}`;
+        if (!setting.englishNumber) {
+            selectedDateString = toPersianNumber(selectedDateString);
+            todayDateString = toPersianNumber(todayDateString);
+        }
+
+        for (var i = todayDateTimeJson.year - setting.yearOffset; i < todayDateTimeJson.year + setting.yearOffset; i++) {
+            if (setting.disableBeforeToday && i < todayDateTimeJson.year) continue;
+            if (setting.disableAfterToday && i > todayDateTimeJson.year) continue;
+            if (disableBeforeDateTimeJson != undefined && disableBeforeDateTimeJson.year != undefined && i < disableBeforeDateTimeJson.year) continue;
+            if (disableAfterDateTimeJson != undefined && disableAfterDateTimeJson.year != undefined && i > disableAfterDateTimeJson.year) continue;
+            var currentYearDateTimeNumber = convertToNumber2(i, selectedDateTimeToShowJson.month, getDaysInMonthPersian(i, selectedDateTimeToShowJson.month)),
+                currentYearDisabledAttr = '',
+                yearText = setting.englishNumber ? i.toString() : toPersianNumber(i),
+                yearDateNumber = convertToNumber2(i, selectedDateTimeToShowJson.month, 1);
+            if (disableBeforeDateTimeJson != undefined && disableBeforeDateTimeJson.year != undefined && currentYearDateTimeNumber < convertToNumber1(disableBeforeDateTimeJson))
+                currentYearDisabledAttr = 'disabled';
+            if (disableAfterDateTimeJson != undefined && disableAfterDateTimeJson.year != undefined && currentYearDateTimeNumber < convertToNumber1(disableAfterDateTimeJson))
+                currentYearDisabledAttr = 'disabled';
+            if (setting.disableBeforeToday && currentYearDateTimeNumber < convertToNumber1(todayDateTimeJson))
+                currentYearDisabledAttr = 'disabled';
+            if (setting.disableAfterToday && currentYearDateTimeNumber > convertToNumber1(todayDateTimeJson))
+                currentYearDisabledAttr = 'disabled';
+            yearsToSelectHtml += `
+<div class="col-3 text-center" ${selectedDateTimeToShowJson.year == i ? 'selected-year' : ''}>
+    <button class="btn btn-sm btn-light" type="button" data-changedatebutton data-number="${yearDateNumber}" ${currentYearDisabledAttr}>${yearText}</button>
+</div>`;
+        }
+
+        if (disableAfterDateTimeJson != undefined && disableAfterDateTimeJson.year <= selectedDateTimeToShowJson.year && disableAfterDateTimeJson.month < selectedDateTimeToShowJson.month)
+            selectedDateToShow = setting.isGregorian ? new Date(disableAfterDateTimeJson.year, disableAfterDateTimeJson.month - 1, 1) : getDateTime1(disableAfterDateTimeJson.year, disableAfterDateTimeJson.month, disableAfterDateTimeJson.day);
+
+        if (disableBeforeDateTimeJson != undefined && disableBeforeDateTimeJson.year >= selectedDateTimeToShowJson.year && disableBeforeDateTimeJson.month > selectedDateTimeToShowJson.month)
+            selectedDateToShow = setting.isGregorian ? new Date(disableBeforeDateTimeJson.year, disableBeforeDateTimeJson.month - 1, 1) : getDateTime1(disableBeforeDateTimeJson.year, disableBeforeDateTimeJson.month, disableBeforeDateTimeJson.day);
+
+        var monthsTdHtml = '',
+            numberOfNextMonths = setting.monthsToShow[1] <= 0 ? 0 : setting.monthsToShow[1],
+            numberOfPrevMonths = setting.monthsToShow[0] <= 0 ? 0 : setting.monthsToShow[0];
+        numberOfPrevMonths *= -1;
+        for (var i1 = numberOfPrevMonths; i1 < 0; i1++) {
+            setting.selectedDateToShow = addMonthToDateTime(getClonedDate(selectedDateToShow), i1);
+            monthsTdHtml += getDateTimePickerMonthHtml1(setting, false, true);
+        }
+        setting.selectedDateToShow = getClonedDate(selectedDateToShow);
+        monthsTdHtml += getDateTimePickerMonthHtml1(setting, false, false);
+        for (var i2 = 1; i2 <= numberOfNextMonths; i2++) {
+            setting.selectedDateToShow = addMonthToDateTime(getClonedDate(selectedDateToShow), i2);
+            monthsTdHtml += getDateTimePickerMonthHtml1(setting, true, false);
+        }
+
+        var totalMonthNumberToShow = Math.abs(numberOfPrevMonths) + 1 + numberOfNextMonths,
+            monthTdStyle = totalMonthNumberToShow > 1 ? 'width: ' + (100 / totalMonthNumberToShow).toString() + '%;' : '';
+
+        monthsTdHtml = monthsTdHtml.replace(/{{monthTdStyle}}/img, monthTdStyle);
+
+        html = html.replace(/{{yearsToSelectHtml}}/img, yearsToSelectHtml);
+        html = html.replace(/{{selectedDateString}}/img, selectedDateString);
+        html = html.replace(/{{todayDateString}}/img, todayDateString);
+        html = html.replace(/{{hour}}/img, selectedDateTimeToShowJson.hour);
+        html = html.replace(/{{minute}}/img, selectedDateTimeToShowJson.minute);
+        html = html.replace(/{{second}}/img, selectedDateTimeToShowJson.second);
+        html = html.replace(/{{monthsTdHtml}}/img, monthsTdHtml);
+
+        return html;
+    }
+
+    function getDateTimePickerMonthHtml1(setting, isNextMonth, isPrevMonth) {
+        var selectedDateToShow = getClonedDate(setting.selectedDateToShow),
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow),
+            selectedDateTime = setting.selectedDate != undefined ? getClonedDate(setting.selectedDate) : undefined,
+            isNextOrPrevMonth = isNextMonth || isPrevMonth,
+            html = dateTimePickerMonthTableHtmlTemplate;
+
+        html = html.replace(/{{monthTdAttribute}}/img, isNextMonth ? 'data-next-month' : isPrevMonth ? 'data-prev-month' : '');
+        html = html.replace(/{{monthNameAttribute}}/img, !isNextOrPrevMonth ? 'hidden' : '');
+        html = html.replace(/{{theadSelectDateButtonTrAttribute}}/img, setting.inLine || !isNextOrPrevMonth ? '' : 'hidden');
+        html = html.replace(/{{weekDayShortName1CssClass}}/img, setting.isGregorian ? 'text-danger' : '');
+        html = html.replace(/{{weekDayShortName7CssClass}}/img, !setting.isGregorian ? 'text-danger' : '');
+        html = html.replace(/{{previousYearText}}/img, setting.isGregorian ? previousYearText : previousYearTextPersian);
+        html = html.replace(/{{previousMonthText}}/img, setting.isGregorian ? previousMonthText : previousMonthTextPersian);
+        html = html.replace(/{{nextMonthText}}/img, setting.isGregorian ? nextMonthText : nextMonthTextPersian);
+        html = html.replace(/{{nextYearText}}/img, setting.isGregorian ? nextYearText : nextYearTextPersian);
+        html = html.replace(/{{monthName1}}/img, getMonthName(0, setting.isGregorian));
+        html = html.replace(/{{monthName2}}/img, getMonthName(1, setting.isGregorian));
+        html = html.replace(/{{monthName3}}/img, getMonthName(2, setting.isGregorian));
+        html = html.replace(/{{monthName4}}/img, getMonthName(3, setting.isGregorian));
+        html = html.replace(/{{monthName5}}/img, getMonthName(4, setting.isGregorian));
+        html = html.replace(/{{monthName6}}/img, getMonthName(5, setting.isGregorian));
+        html = html.replace(/{{monthName7}}/img, getMonthName(6, setting.isGregorian));
+        html = html.replace(/{{monthName8}}/img, getMonthName(7, setting.isGregorian));
+        html = html.replace(/{{monthName9}}/img, getMonthName(8, setting.isGregorian));
+        html = html.replace(/{{monthName10}}/img, getMonthName(9, setting.isGregorian));
+        html = html.replace(/{{monthName11}}/img, getMonthName(10, setting.isGregorian));
+        html = html.replace(/{{monthName12}}/img, getMonthName(11, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName1}}/img, getWeekDayShortName(0, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName2}}/img, getWeekDayShortName(1, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName3}}/img, getWeekDayShortName(2, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName4}}/img, getWeekDayShortName(3, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName5}}/img, getWeekDayShortName(4, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName6}}/img, getWeekDayShortName(5, setting.isGregorian));
+        html = html.replace(/{{weekDayShortName7}}/img, getWeekDayShortName(6, setting.isGregorian));
+
+        var i = 0,
+            j = 0,
+            firstWeekDayNumber,
+            cellNumber = 0,
+            tdNumber = 0,
+            selectedYear = 0,
+            selectedDateNumber = 0,
+            selectedMonthName = '',
+            todayDateNumber,
+            todayDateTimeJson = {}, // year, month, day, hour, minute, second
+            dateTimeToShowJson = {}, // year, month, day, hour, minute, second
+            numberOfDaysInCurrentMonth,
+            $tr = $('<tr />'),
+            $td = $('<td />'),
+            daysHtml = '',
+            currentDateNumber = 0,
+            currentMonthInfo = '',
+            previousMonthDateNumber = 0,
+            nextMonthDateNumber = 0,
+            previousYearDateNumber = 0,
+            nextYearDateNumber = 0,
+            disableBeforeDateTimeNumber = 0,
+            disableAfterDateTimeNumber = 0,
+            rangeSelectorStartDate = !setting.rangeSelector || setting.rangeSelectorStartDate == undefined ? undefined : getClonedDate(setting.rangeSelectorStartDate),
+            rangeSelectorEndDate = !setting.rangeSelector || setting.rangeSelectorEndDate == undefined ? undefined : getClonedDate(setting.rangeSelectorEndDate),
+            rangeSelectorStartDateNumber = 0,
+            rangeSelectorEndDateNumber = 0,
+            dayNumberInString = '0',
+            dayOfWeek = '', // نام روز هفته
+            monthsDateNumberAndAttr = {
+                month1DateNumber: 0,
+                month2DateNumber: 0,
+                month3DateNumber: 0,
+                month4DateNumber: 0,
+                month5DateNumber: 0,
+                month6DateNumber: 0,
+                month7DateNumber: 0,
+                month8DateNumber: 0,
+                month9DateNumber: 0,
+                month10DateNumber: 0,
+                month11DateNumber: 0,
+                month12DateNumber: 0,
+                selectMonth1ButtonCssClass: '',
+                selectMonth2ButtonCssClass: '',
+                selectMonth3ButtonCssClass: '',
+                selectMonth4ButtonCssClass: '',
+                selectMonth5ButtonCssClass: '',
+                selectMonth6ButtonCssClass: '',
+                selectMonth7ButtonCssClass: '',
+                selectMonth8ButtonCssClass: '',
+                selectMonth9ButtonCssClass: '',
+                selectMonth10ButtonCssClass: '',
+                selectMonth11ButtonCssClass: '',
+                selectMonth12ButtonCssClass: '',
+            },
+            holiDaysDateNumbers = [],
+            disabledDatesNumber = [],
+            disableBeforeDateTimeJson = {},
+            disableAfterDateTimeJson = {},
+            previousYearButtonDisabledAttribute = '',
+            previousMonthButtonDisabledAttribute = '',
+            selectYearButtonDisabledAttribute = '',
+            nextMonthButtonDisabledAttribute = '',
+            nextYearButtonDisabledAttribute = '';
+
+        if (setting.isGregorian) {
+            dateTimeToShowJson = getDateTimeJson1(selectedDateToShowTemp);
+            todayDateTimeJson = getDateTimeJson1(new Date());
+            disableBeforeDateTimeJson = !setting.disableBeforeDate ? undefined : getDateTimeJson1(setting.disableBeforeDate);
+            disableAfterDateTimeJson = !setting.disableAfterDate ? undefined : getDateTimeJson1(setting.disableAfterDate);
+            firstWeekDayNumber = new Date(dateTimeToShowJson.year, dateTimeToShowJson.month - 1, 1).getDay();
+            selectedDateNumber = !selectedDateTime ? 0 : convertToNumber1(getDateTimeJson1(selectedDateTime));
+            numberOfDaysInCurrentMonth = getDaysInMonth(dateTimeToShowJson.year, dateTimeToShowJson.month - 1);
+            numberOfDaysInPreviousMonth = getDaysInMonth(dateTimeToShowJson.year, dateTimeToShowJson.month - 2);
+            previousMonthDateNumber = convertToNumber1(getDateTimeJson1(getLastDayDateOfPreviousMonth(selectedDateToShowTemp, true)));
+            nextMonthDateNumber = convertToNumber1(getDateTimeJson1(getFirstDayDateOfNextMonth(selectedDateToShowTemp, true)));
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            previousYearDateNumber = convertToNumber1(getDateTimeJson1(new Date(selectedDateToShowTemp.setFullYear(selectedDateToShowTemp.getFullYear() - 1))));
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            nextYearDateNumber = convertToNumber1(getDateTimeJson1(new Date(selectedDateToShowTemp.setFullYear(selectedDateToShowTemp.getFullYear() + 1))));
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            rangeSelectorStartDateNumber = !setting.rangeSelector || !rangeSelectorStartDate ? 0 : convertToNumber3(rangeSelectorStartDate);
+            rangeSelectorEndDateNumber = !setting.rangeSelector || !rangeSelectorEndDate ? 0 : convertToNumber3(rangeSelectorEndDate);
+            for (i = 1; i <= 12; i++) {
+                monthsDateNumberAndAttr['month' + i.toString() + 'DateNumber'] = convertToNumber1(getDateTimeJson1(new Date(selectedDateToShowTemp.setMonth(i - 1))));
+                selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            }
+            for (i = 0; i < setting.holiDays.length; i++) {
+                holiDaysDateNumbers.push(convertToNumber1(getDateTimeJson1(setting.holiDays[i])));
+            }
+            for (i = 0; i < setting.disabledDates.length; i++) {
+                disabledDatesNumber.push(convertToNumber1(getDateTimeJson1(setting.disabledDates[i])));
+            }
+        } else {
+            dateTimeToShowJson = getDateTimeJsonPersian1(selectedDateToShowTemp);
+            todayDateTimeJson = getDateTimeJsonPersian1(new Date());
+            disableBeforeDateTimeJson = !setting.disableBeforeDate ? undefined : getDateTimeJsonPersian1(setting.disableBeforeDate);
+            disableAfterDateTimeJson = !setting.disableAfterDate ? undefined : getDateTimeJsonPersian1(setting.disableAfterDate);
+            firstWeekDayNumber = getDateTimeJsonPersian2(dateTimeToShowJson.year, dateTimeToShowJson.month, 1, 0, 0, 0).dayOfWeek;
+            selectedDateNumber = !selectedDateTime ? 0 : convertToNumber1(getDateTimeJsonPersian1(selectedDateTime));
+            numberOfDaysInCurrentMonth = getDaysInMonthPersian(dateTimeToShowJson.year, dateTimeToShowJson.month);
+            numberOfDaysInPreviousMonth = getDaysInMonthPersian(dateTimeToShowJson.year - 1, dateTimeToShowJson.month - 1);
+            previousMonthDateNumber = convertToNumber1(getDateTimeJsonPersian1(getLastDayDateOfPreviousMonth(selectedDateToShowTemp, false)));
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            nextMonthDateNumber = convertToNumber1(getDateTimeJsonPersian1(getFirstDayDateOfNextMonth(selectedDateToShowTemp, false)));
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            previousYearDateNumber = convertToNumber2(dateTimeToShowJson.year - 1, dateTimeToShowJson.month, dateTimeToShowJson.day);
+            nextYearDateNumber = convertToNumber2(dateTimeToShowJson.year + 1, dateTimeToShowJson.month, dateTimeToShowJson.day);
+            selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            rangeSelectorStartDateNumber = !setting.rangeSelector || !rangeSelectorStartDate ? 0 : convertToNumber1(getDateTimeJsonPersian1(rangeSelectorStartDate));
+            rangeSelectorEndDateNumber = !setting.rangeSelector || !rangeSelectorEndDate ? 0 : convertToNumber1(getDateTimeJsonPersian1(rangeSelectorEndDate));
+            for (i = 1; i <= 12; i++) {
+                monthsDateNumberAndAttr['month' + i.toString() + 'DateNumber'] = convertToNumber2(dateTimeToShowJson.year, i, getDaysInMonthPersian(dateTimeToShowJson.year, i));
+                selectedDateToShowTemp = getClonedDate(selectedDateToShow);
+            }
+            for (i = 0; i < setting.holiDays.length; i++) {
+                holiDaysDateNumbers.push(convertToNumber1(getDateTimeJsonPersian1(setting.holiDays[i])));
+            }
+            for (i = 0; i < setting.disabledDates.length; i++) {
+                disabledDatesNumber.push(convertToNumber1(getDateTimeJsonPersian1(setting.disabledDates[i])));
+            }
+        }
+
+        // بررسی پراپرتی های از تاریخ، تا تاریخ
+        if ((setting.fromDate || setting.toDate) && setting.groupId) {
+            var $toDateElement = $('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-toDate]'),
+                $fromDateElement = $('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-fromDate]');
+            if (setting.fromDate) {
+                var toDateSetting = getSetting2($toDateElement),
+                    toDateSelectedDate = toDateSetting.selectedDate;
+                disableAfterDateTimeJson = !toDateSelectedDate ? undefined : setting.isGregorian ? getDateTimeJson1(toDateSelectedDate) : getDateTimeJsonPersian1(toDateSelectedDate);
+            } else if (setting.toDate) {
+                var fromDateSetting = getSetting2($fromDateElement),
+                    fromDateSelectedDate = fromDateSetting.selectedDate;
+                disableBeforeDateTimeJson = !fromDateSelectedDate ? undefined : setting.isGregorian ? getDateTimeJson1(fromDateSelectedDate) : getDateTimeJsonPersian1(fromDateSelectedDate);
+            }
+        }
+
+        todayDateNumber = convertToNumber1(todayDateTimeJson);
+        selectedYear = setting.englishNumber ? dateTimeToShowJson.year : toPersianNumber(dateTimeToShowJson.year);
+        disableBeforeDateTimeNumber = !disableBeforeDateTimeJson ? undefined : convertToNumber1(disableBeforeDateTimeJson);
+        disableAfterDateTimeNumber = !disableAfterDateTimeJson ? undefined : convertToNumber1(disableAfterDateTimeJson);
+        currentMonthInfo = getMonthName(dateTimeToShowJson.month - 1, setting.isGregorian) + ' ' + dateTimeToShowJson.year.toString();
+        if (!setting.englishNumber) currentMonthInfo = toPersianNumber(currentMonthInfo);
+        selectedMonthName = getMonthName(dateTimeToShowJson.month - 1, setting.isGregorian);
+
+        if (setting.yearOffset <= 0) {
+            previousYearButtonDisabledAttribute = 'disabled';
+            nextYearButtonDisabledAttribute = 'disabled';
+            selectYearButtonDisabledAttribute = 'disabled';
+        }
+
+        // روز های ماه قبل
+        if (firstWeekDayNumber != 6) {
+            if (setting.isGregorian) firstWeekDayNumber--;
+            var previousMonthDateTimeJson = addMonthToDateTimeJson(dateTimeToShowJson, -1, setting.isGregorian);
+            for (i = numberOfDaysInPreviousMonth - firstWeekDayNumber; i <= numberOfDaysInPreviousMonth; i++) {
+                currentDateNumber = convertToNumber2(previousMonthDateTimeJson.year, previousMonthDateTimeJson.month, i);
+                dayNumberInString = setting.englishNumber ? zeroPad(i) : toPersianNumber(zeroPad(i));
+                $td = $('<td data-nm />')
+                    .attr('data-number', currentDateNumber)
+                    .html(dayNumberInString);
+                if (setting.rangeSelector) {
+                    if (currentDateNumber == rangeSelectorStartDateNumber || currentDateNumber == rangeSelectorEndDateNumber)
+                        $td.addClass('selected-range-days-start-end');
+                    else if (rangeSelectorStartDateNumber > 0 && rangeSelectorEndDateNumber > 0 && currentDateNumber > rangeSelectorStartDateNumber && currentDateNumber < rangeSelectorEndDateNumber)
+                        $td.addClass('selected-range-days');
+                }
+                // روز جمعه
+                if (!setting.isGregorian && tdNumber == 6)
+                    $td.addClass('text-danger');
+                // روز یکشنبه
+                else if (setting.isGregorian && tdNumber == 0)
+                    $td.addClass('text-danger');
+                $tr.append($td);
+                cellNumber++;
+                tdNumber++;
+                if (tdNumber >= 7) {
+                    tdNumber = 0;
+                    daysHtml += $tr[0].outerHTML;
+                    isTrAppended = true;
+                    $tr = $('<tr />');
+                }
+            }
+        }
+
+        // روزهای ماه جاری
+        for (i = 1; i <= numberOfDaysInCurrentMonth; i++) {
+
+            if (tdNumber >= 7) {
+                tdNumber = 0;
+                daysHtml += $tr[0].outerHTML;
+                isTrAppended = true;
+                $tr = $('<tr />');
+            }
+
+            // عدد روز
+            currentDateNumber = convertToNumber2(dateTimeToShowJson.year, dateTimeToShowJson.month, i);
+            dayNumberInString = setting.englishNumber ? zeroPad(i) : toPersianNumber(zeroPad(i));
+
+            $td = $('<td data-day />')
+                .attr('data-number', currentDateNumber)
+                .html(dayNumberInString);
+
+            // امروز
+            if (currentDateNumber == todayDateNumber) {
+                $td.attr('data-today', '');
+                // اگر نام روز هفته انتخاب شده در تکس باکس قبل از تاریخ امروز باشد
+                // نباید دیگر نام روز هفته تغییر کند
+                if (!dayOfWeek)
+                    dayOfWeek = getWeekDayName(tdNumber - 1 < 0 ? 0 : tdNumber - 1, setting.isGregorian);
+            }
+
+            // روز از قبل انتخاب شده
+            if (!setting.rangeSelector && selectedDateNumber == currentDateNumber) {
+                $td.attr('data-selectedday', '');
+                dayOfWeek = getWeekDayName(tdNumber - 1 < 0 ? 0 : tdNumber - 1, setting.isGregorian);
+            }
+
+            // روزهای تعطیل
+            for (j = 0; j < holiDaysDateNumbers.length; j++) {
+                if (holiDaysDateNumbers[j] != currentDateNumber) continue;
+                $td.addClass('text-danger');
+                break;
+            }
+
+            // روز جمعه
+            if (!setting.isGregorian && tdNumber == 6)
+                $td.addClass('text-danger');
+            // روز یکشنبه
+            else if (setting.isGregorian && tdNumber == 0)
+                $td.addClass('text-danger');
+
+            // روزهای غیر فعال شده
+            if (setting.disableBeforeToday) {
+                if (currentDateNumber < todayDateNumber) $td.attr('disabled', '');
+                if (nextMonthDateNumber < todayDateNumber)
+                    nextMonthButtonDisabledAttribute = 'disabled';
+                if (nextYearDateNumber < todayDateNumber)
+                    nextYearButtonDisabledAttribute = 'disabled';
+                if (previousMonthDateNumber < todayDateNumber)
+                    previousMonthButtonDisabledAttribute = 'disabled';
+                if (previousYearDateNumber < todayDateNumber)
+                    previousYearButtonDisabledAttribute = 'disabled';
+                for (j = 1; j <= 12; j++) {
+                    if (monthsDateNumberAndAttr['month' + j.toString() + 'DateNumber'] < todayDateNumber)
+                        monthsDateNumberAndAttr['selectMonth' + j.toString() + 'ButtonCssClass'] = 'disabled';
+                }
+            }
+            if (setting.disableAfterToday) {
+                if (currentDateNumber > todayDateNumber) $td.attr('disabled', '');
+                if (nextMonthDateNumber > todayDateNumber)
+                    nextMonthButtonDisabledAttribute = 'disabled';
+                if (nextYearDateNumber > todayDateNumber)
+                    nextYearButtonDisabledAttribute = 'disabled';
+                if (previousMonthDateNumber > todayDateNumber)
+                    previousMonthButtonDisabledAttribute = 'disabled';
+                if (previousYearDateNumber > todayDateNumber)
+                    previousYearButtonDisabledAttribute = 'disabled';
+                for (j = 1; j <= 12; j++) {
+                    if (monthsDateNumberAndAttr['month' + j.toString() + 'DateNumber'] > todayDateNumber)
+                        monthsDateNumberAndAttr['selectMonth' + j.toString() + 'ButtonCssClass'] = 'disabled';
+                }
+            }
+            if (disableAfterDateTimeNumber) {
+                if (currentDateNumber > disableAfterDateTimeNumber) $td.attr('disabled', '');
+                if (nextMonthDateNumber > disableAfterDateTimeNumber)
+                    nextMonthButtonDisabledAttribute = 'disabled';
+                if (nextYearDateNumber > disableAfterDateTimeNumber)
+                    nextYearButtonDisabledAttribute = 'disabled';
+                if (previousMonthDateNumber > disableAfterDateTimeNumber)
+                    previousMonthButtonDisabledAttribute = 'disabled';
+                if (previousYearDateNumber > disableAfterDateTimeNumber)
+                    previousYearButtonDisabledAttribute = 'disabled';
+                for (j = 1; j <= 12; j++) {
+                    if (monthsDateNumberAndAttr['month' + j.toString() + 'DateNumber'] > disableAfterDateTimeNumber)
+                        monthsDateNumberAndAttr['selectMonth' + j.toString() + 'ButtonCssClass'] = 'disabled';
+                }
+            }
+            if (disableBeforeDateTimeNumber) {
+                if (currentDateNumber < disableBeforeDateTimeNumber) $td.attr('disabled', '');
+                if (nextMonthDateNumber < disableBeforeDateTimeNumber)
+                    nextMonthButtonDisabledAttribute = 'disabled';
+                if (nextYearDateNumber < disableBeforeDateTimeNumber)
+                    nextYearButtonDisabledAttribute = 'disabled';
+                if (previousMonthDateNumber < disableBeforeDateTimeNumber)
+                    previousMonthButtonDisabledAttribute = 'disabled';
+                if (previousYearDateNumber < disableBeforeDateTimeNumber)
+                    previousYearButtonDisabledAttribute = 'disabled';
+                for (j = 1; j <= 12; j++) {
+                    if (monthsDateNumberAndAttr['month' + j.toString() + 'DateNumber'] < disableBeforeDateTimeNumber)
+                        monthsDateNumberAndAttr['selectMonth' + j.toString() + 'ButtonCssClass'] = 'disabled';
+                }
+            }
+            for (j = 0; j < disabledDatesNumber.length; j++) {
+                if (currentDateNumber == disabledDatesNumber[j])
+                    $td.attr('disabled', '');
+            }
+            // \\
+
+            if (setting.rangeSelector) {
+                if (currentDateNumber == rangeSelectorStartDateNumber || currentDateNumber == rangeSelectorEndDateNumber)
+                    $td.addClass('selected-range-days-start-end');
+                else if (rangeSelectorStartDateNumber > 0 && rangeSelectorEndDateNumber > 0 && currentDateNumber > rangeSelectorStartDateNumber && currentDateNumber < rangeSelectorEndDateNumber)
+                    $td.addClass('selected-range-days');
+            }
+
+            $tr.append($td);
+            isTrAppended = false;
+
+            tdNumber++;
+            cellNumber++;
+        }
+
+        if (tdNumber >= 7) {
+            tdNumber = 0;
+            daysHtml += $tr[0].outerHTML;
+            isTrAppended = true;
+            $tr = $('<tr />');
+        }
+
+        // روزهای ماه بعد
+        var nextMonthDateTimeJson = addMonthToDateTimeJson(dateTimeToShowJson, 1, setting.isGregorian);
+        for (i = 1; i <= 42 - cellNumber; i++) {
+            dayNumberInString = setting.englishNumber ? zeroPad(i) : toPersianNumber(zeroPad(i));
+            currentDateNumber = convertToNumber2(nextMonthDateTimeJson.year, nextMonthDateTimeJson.month, i);
+            $td = $('<td data-nm />')
+                .attr('data-number', currentDateNumber)
+                .html(dayNumberInString);
+            if (setting.rangeSelector) {
+                if (currentDateNumber == rangeSelectorStartDateNumber || currentDateNumber == rangeSelectorEndDateNumber)
+                    $td.addClass('selected-range-days-start-end');
+                else if (rangeSelectorStartDateNumber > 0 && rangeSelectorEndDateNumber > 0 && currentDateNumber > rangeSelectorStartDateNumber && currentDateNumber < rangeSelectorEndDateNumber)
+                    $td.addClass('selected-range-days');
+            }
+            // روز جمعه
+            if (!setting.isGregorian && tdNumber == 6)
+                $td.addClass('text-danger');
+            // روز یکشنبه
+            else if (setting.isGregorian && tdNumber == 0)
+                $td.addClass('text-danger');
+            $tr.append($td);
+            tdNumber++;
+            if (tdNumber >= 7) {
+                tdNumber = 0;
+                daysHtml += $tr[0].outerHTML;
+                isTrAppended = true;
+                $tr = $('<tr />');
+            }
+        }
+
+        if (!isTrAppended) {
+            daysHtml += $tr[0].outerHTML;
+            isTrAppended = true;
+        }
+
+        html = html.replace(/{{currentMonthInfo}}/img, currentMonthInfo);
+        html = html.replace(/{{selectedYear}}/img, selectedYear);
+        html = html.replace(/{{selectedMonthName}}/img, selectedMonthName);
+        html = html.replace(/{{daysHtml}}/img, daysHtml);
+        html = html.replace(/{{previousYearButtonDisabledAttribute}}/img, previousYearButtonDisabledAttribute);
+        html = html.replace(/{{previousYearButtonDateNumber}}/img, previousYearDateNumber);
+        html = html.replace(/{{previousMonthButtonDisabledAttribute}}/img, previousMonthButtonDisabledAttribute);
+        html = html.replace(/{{previousMonthButtonDateNumber}}/img, previousMonthDateNumber);
+        html = html.replace(/{{selectYearButtonDisabledAttribute}}/img, selectYearButtonDisabledAttribute);
+        html = html.replace(/{{nextMonthButtonDisabledAttribute}}/img, nextMonthButtonDisabledAttribute);
+        html = html.replace(/{{nextMonthButtonDateNumber}}/img, nextMonthDateNumber);
+        html = html.replace(/{{nextYearButtonDisabledAttribute}}/img, nextYearButtonDisabledAttribute);
+        html = html.replace(/{{nextYearButtonDateNumber}}/img, nextYearDateNumber);
+        html = html.replace(/{{dropDownMenuMonth1DateNumber}}/img, monthsDateNumberAndAttr.month1DateNumber);
+        html = html.replace(/{{dropDownMenuMonth2DateNumber}}/img, monthsDateNumberAndAttr.month2DateNumber);
+        html = html.replace(/{{dropDownMenuMonth3DateNumber}}/img, monthsDateNumberAndAttr.month3DateNumber);
+        html = html.replace(/{{dropDownMenuMonth4DateNumber}}/img, monthsDateNumberAndAttr.month4DateNumber);
+        html = html.replace(/{{dropDownMenuMonth5DateNumber}}/img, monthsDateNumberAndAttr.month5DateNumber);
+        html = html.replace(/{{dropDownMenuMonth6DateNumber}}/img, monthsDateNumberAndAttr.month6DateNumber);
+        html = html.replace(/{{dropDownMenuMonth7DateNumber}}/img, monthsDateNumberAndAttr.month7DateNumber);
+        html = html.replace(/{{dropDownMenuMonth8DateNumber}}/img, monthsDateNumberAndAttr.month8DateNumber);
+        html = html.replace(/{{dropDownMenuMonth9DateNumber}}/img, monthsDateNumberAndAttr.month9DateNumber);
+        html = html.replace(/{{dropDownMenuMonth10DateNumber}}/img, monthsDateNumberAndAttr.month10DateNumber);
+        html = html.replace(/{{dropDownMenuMonth11DateNumber}}/img, monthsDateNumberAndAttr.month11DateNumber);
+        html = html.replace(/{{dropDownMenuMonth12DateNumber}}/img, monthsDateNumberAndAttr.month12DateNumber);
+        html = html.replace(/{{selectMonth1ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth1ButtonCssClass);
+        html = html.replace(/{{selectMonth2ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth2ButtonCssClass);
+        html = html.replace(/{{selectMonth3ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth3ButtonCssClass);
+        html = html.replace(/{{selectMonth4ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth4ButtonCssClass);
+        html = html.replace(/{{selectMonth5ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth5ButtonCssClass);
+        html = html.replace(/{{selectMonth6ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth6ButtonCssClass);
+        html = html.replace(/{{selectMonth7ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth7ButtonCssClass);
+        html = html.replace(/{{selectMonth8ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth8ButtonCssClass);
+        html = html.replace(/{{selectMonth9ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth9ButtonCssClass);
+        html = html.replace(/{{selectMonth10ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth10ButtonCssClass);
+        html = html.replace(/{{selectMonth11ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth11ButtonCssClass);
+        html = html.replace(/{{selectMonth12ButtonCssClass}}/img, monthsDateNumberAndAttr.selectMonth12ButtonCssClass);
+
+        return html;
+    }
+
+    //#endregion
+
+    //#region Events
+
+    // کلیک روی روزها
+    $(document).on('click', mdDatePickerContainerSelector + ' [data-day]', function () {
+        var $this = $(this),
+            disabled = $this.attr('disabled'),
+            dateNumber = Number($this.attr('data-number')),
+            setting = getSetting1($this),
+            selectedDateJson = setting.selectedDate == undefined ? undefined : getDateTimeJson1(setting.selectedDate),
+            selectedDateToShow = getClonedDate(setting.selectedDateToShow);
+        if (disabled) return;
+        selectedDateToShow = getDateTime4(dateNumber, selectedDateToShow, setting);
+
+        if (setting.rangeSelector) { // اگر رنج سلکتور فعال بود
+            if (setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate != undefined) {
+                setting.rangeSelectorStartDate = undefined;
+                setting.rangeSelectorEndDate = undefined;
+                $this.parents('table:last').find('td.selected-range-days-start-end,td.selected-range-days')
+                    .removeClass('selected-range-days')
+                    .removeClass('selected-range-days-start-end');
+            }
+            if (setting.rangeSelectorStartDate == undefined) {
+                $this.addClass('selected-range-days-start-end');
+                setting.rangeSelectorStartDate = getClonedDate(selectedDateToShow);
+                setting.selectedDate = getClonedDate(selectedDateToShow);
+                setting.selectedDateToShow = getClonedDate(selectedDateToShow);
+            } else if (setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate == undefined) {
+                $this.addClass('selected-range-days-start-end');
+                setting.rangeSelectorEndDate = getClonedDate(selectedDateToShow);
+                setSelectedData(setting);
+            }
+            setSetting1($this, setting);
+            if (setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate != undefined) {
+                if (!setting.inLine) hidePopover($(mdDatePickerPopoverSelector));
+                else updateCalendarHtml1($this, setting);
+            }
+            return;
+        }
+        setting.selectedDate = getClonedDate(selectedDateToShow);
+        setting.selectedDateToShow = getClonedDate(selectedDateToShow);
+        if (selectedDateJson != undefined) {
+            setting.selectedDate.setHours(selectedDateJson.hour);
+            setting.selectedDate.setMinutes(selectedDateJson.minute);
+            setting.selectedDate.setSeconds(selectedDateJson.second);
+        }
+        setSetting1($this, setting);
+        setSelectedData(setting);
+        if (!setting.inLine) hidePopover($(mdDatePickerPopoverSelector));
+        else updateCalendarHtml1($this, setting);
+    });
+
+    // هاور روی روزها
+    $(document).on('mouseenter', mdDatePickerContainerSelector + ' [data-day],' + mdDatePickerContainerSelector + ' [data-nm],' + mdDatePickerContainerSelector + ' [data-pm]', function () {
+        var $this = $(this),
+            $allTdDays = $this.parents('table:last').find('td[data-day]'),
+            disabled = $this.attr('disabled'),
+            dateNumber = Number($this.attr('data-number')),
+            setting = getSetting1($this);
+        if (disabled || !setting.rangeSelector || (setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate != undefined)) return;
+
+        $allTdDays.removeClass('selected-range-days');
+
+        var rangeSelectorStartDate = !setting.rangeSelectorStartDate ? undefined : getClonedDate(setting.rangeSelectorStartDate),
+            rangeSelectorEndDate = !setting.rangeSelectorEndDate ? undefined : getClonedDate(setting.rangeSelectorEndDate),
+            rangeSelectorStartDateNumber = 0,
+            rangeSelectorEndDateNumber = 0;
+
+        if (setting.isGregorian) {
+            rangeSelectorStartDateNumber = !rangeSelectorStartDate ? 0 : convertToNumber3(rangeSelectorStartDate);
+            rangeSelectorEndDateNumber = !rangeSelectorEndDate ? 0 : convertToNumber3(rangeSelectorEndDate);
+        } else {
+            rangeSelectorStartDateNumber = !rangeSelectorStartDate ? 0 : convertToNumber1(getDateTimeJsonPersian1(rangeSelectorStartDate));
+            rangeSelectorEndDateNumber = !rangeSelectorEndDate ? 0 : convertToNumber1(getDateTimeJsonPersian1(rangeSelectorEndDate));
+        }
+
+        if (rangeSelectorStartDateNumber > 0 && dateNumber > rangeSelectorStartDateNumber) {
+            for (var i1 = rangeSelectorStartDateNumber; i1 <= dateNumber; i1++) {
+                $allTdDays.filter('[data-number="' + i1.toString() + '"]:not(.selected-range-days-start-end)').addClass('selected-range-days');
+            }
+        } else if (rangeSelectorEndDateNumber > 0 && dateNumber < rangeSelectorEndDateNumber) {
+            for (var i2 = dateNumber; i2 <= rangeSelectorEndDateNumber; i2++) {
+                $allTdDays.filter('[data-number="' + i2.toString() + '"]:not(.selected-range-days-start-end)').addClass('selected-range-days');
+            }
+        }
+
+    });
+
+    // کلیک روی دکمه هایی که تاریخ را تغییر می دهند
+    $(document).on('click', mdDatePickerContainerSelector + ' [data-changedatebutton]', function () {
+        var $this = $(this),
+            disabled = $this.attr('disabled'),
+            dateNumber = Number($this.attr('data-number')),
+            setting = getSetting1($this),
+            selectedDateToShow = getClonedDate(setting.selectedDateToShow);
+        if (disabled) return;
+        selectedDateToShow = getDateTime4(dateNumber, selectedDateToShow, setting);
+        setting.selectedDateToShow = getClonedDate(selectedDateToShow);
+        setSetting1($this, setting);
+        updateCalendarHtml1($this, setting);
+    });
+
+    // عوض کردن ساعت
+    $(document).on('blur', mdDatePickerContainerSelector + ' input[data-clock]', function () {
+        var $this = $(this),
+            $thisContainer = $this.parents(mdDatePickerContainerSelector + ':first'),
+            $hour = $thisContainer.find('input[type="number"][data-clock="hour"]'),
+            $minute = $thisContainer.find('input[type="number"][data-clock="minute"]'),
+            $second = $thisContainer.find('input[type="number"][data-clock="second"]'),
+            hour = Number($hour.val()),
+            minute = Number($minute.val()),
+            second = Number($second.val()),
+            setting = getSetting1($this);
+
+        if (!setting.enableTimePicker) return;
+
+        if (setting.selectedDateToShow == undefined) setting.selectedDateToShow = new Date();
+        hour = !isNumber(hour) ? setting.selectedDateToShow.getHours() : hour;
+        minute = !isNumber(minute) ? setting.selectedDateToShow.getMinutes() : minute;
+        second = !isNumber(second) ? setting.selectedDateToShow.getSeconds() : second;
+
+        if (setting.selectedDate == undefined) setting.selectedDate = new Date();
+        setting.selectedDate = new Date(setting.selectedDate.setHours(hour));
+        setting.selectedDate = new Date(setting.selectedDate.setMinutes(minute));
+        setting.selectedDate = new Date(setting.selectedDate.setSeconds(second));
+
+        setSetting1($this, setting);
+        setSelectedData(setting);
+    });
+
+    // کلیک روی سال انتخابی برای عوض کردن سال
+    $(document).on('click', mdDatePickerContainerSelector + ' [select-year-button]', function () {
+        $(this).parents(mdDatePickerContainerSelector + ':first').find('.select-year-box').removeClass('w-0');
+    });
+
+    // برو به امروز
+    $(document).on('click', mdDatePickerContainerSelector + ' [data-go-today]', function () {
+        var $this = $(this),
+            setting = getSetting1($this);
+        setting.selectedDateToShow = new Date();
+        setSetting1($this, setting);
+        updateCalendarHtml1($this, setting);
+    });
+
+    // مخفی کردن تقویم با کلیک روی جایی که تقویم نیست
+    $('html').on('click', function (e) {
+        if (triggerStart) return;
+        var $target = $(e.target),
+            $popoverDescriber = getPopoverDescriber($target);
+        if ($popoverDescriber.length >= 1) return;
+        hidePopover($(mdDatePickerPopoverSelector));
+    });
+
+    //#endregion
+
+    var methods = {
+        init: function (options) {
+            return this.each(function () {
+                var $this = $(this),
+                    setting = $.extend({
+                        englishNumber: false,
+                        placement: 'bottom',
+                        trigger: 'click',
+                        enableTimePicker: false,
+                        targetTextSelector: '',
+                        targetDateSelector: '',
+                        toDate: false,
+                        fromDate: false,
+                        groupId: '',
+                        disabled: false,
+                        textFormat: '',
+                        dateFormat: '',
+                        isGregorian: false,
+                        inLine: false,
+                        selectedDate: undefined,
+                        selectedDateToShow: new Date(),
+                        monthsToShow: [0, 0],
+                        yearOffset: 30,
+                        holiDays: [],
+                        disabledDates: [],
+                        disableBeforeToday: false,
+                        disableAfterToday: false,
+                        disableBeforeDate: undefined,
+                        disableAfterDate: undefined,
+                        rangeSelector: false,
+                        rangeSelectorStartDate: undefined,
+                        rangeSelectorEndDate: undefined
+                    }, options);
+                $this.attr(mdDatePickerFlag, '');
+                if (setting.targetDateSelector) {
+                    var targetValue = setting.targetDateSelector.val();
+                    if (targetValue) {
+                        setting.selectedDate = new Date(Date.parse(targetValue));
+                        setting.selectedDateToShow = getClonedDate(setting.selectedDate);
+                    }
+                } else if (setting.targetTextSelector) {
+                    var textValue = $(setting.targetTextSelector).val();
+                    if (textValue) {
+                        setting.selectedDate = parseDateTime(textValue, setting);
+                        setting.selectedDateToShow = getClonedDate(setting.selectedDate);
+                    }
+                }
+                if (setting.rangeSelector) {
+                    setting.fromDate = false;
+                    setting.toDate = false;
+                    setting.enableTimePicker = false;
+                }
+                if ((setting.fromDate || setting.toDate) && setting.groupId) {
+                    $this.attr(mdDatePickerGroupIdAttribute, setting.groupId);
+                    if (setting.toDate) $this.attr('data-toDate', '');
+                    else if (setting.fromDate) $this.attr('data-fromDate', '');
+                }
+                if (setting.isGregorian) setting.englishNumber = true;
+                if (setting.toDate && setting.fromDate) throw new Error(`MdPersianDateTimePicker => You can not set true 'toDate' and 'fromDate' together`);
+                if (!setting.groupId && (setting.toDate || setting.fromDate)) throw new Error(`MdPersianDateTimePicker => When you set 'toDate' or 'fromDate' true, you have to set 'groupId'`);
+                if (setting.disable) $this.attr('disabled', '');
+                if (setting.enableTimePicker && !setting.textFormat) setting.textFormat = 'yyyy/MM/dd   HH:mm:ss';
+                else if (!setting.enableTimePicker && !setting.textFormat) setting.textFormat = 'yyyy/MM/dd';
+                if (setting.enableTimePicker && !setting.dateFormat) setting.dateFormat = 'yyyy/MM/dd   HH:mm:ss';
+                else if (!setting.enableTimePicker && !setting.dateFormat) setting.dateFormat = 'yyyy/MM/dd';
+                $this.data(mdPluginName, setting);
+                if (setting.selectedDate != undefined) {
+                    setSelectedData(setting);
+                    triggerChangeCalling = false;
+                }
+                // نمایش تقویم
+                if (setting.inLine) {
+                    $this.append(getDateTimePickerHtml(setting));
+                } else {
+                    $this.popover({
+                        container: 'body',
+                        content: '',
+                        html: true,
+                        placement: setting.placement,
+                        title: ' ',
+                        trigger: 'manual',
+                        template: popverHtmlTemplate,
+                    }).on(setting.trigger, function () {
+                        triggerStart = true;
+                        $this = $(this);
+                        setting = $this.data(mdPluginName);
+                        if (setting.disabled) return;
+                        hideOthers($this);
+                        showPopover($this);
+                        setTimeout(function () {
+                            setting.selectedDateToShow = setting.selectedDate != undefined ? getClonedDate(setting.selectedDate) : new Date();
+                            var calendarHtml = getDateTimePickerHtml(setting),
+                                selectedDateString = $(calendarHtml).find('[data-selecteddatestring]').text().trim();
+                            $('#' + $this.attr('aria-describedby')).find('[data-name="mds-datetimepicker-title"]').html(selectedDateString);
+                            $('#' + $this.attr('aria-describedby')).find('[data-name="mds-datetimepicker-popoverbody"]').html(calendarHtml);
+                            $this.popover('update');
+                            triggerStart = false;
+                        }, 10);
+                    });
+                }
+                if (setting.targetTextSelector) {
+                    setting.targetTextSelector.on('change', function () {
+                        if (triggerChangeCalling) {
+                            setTimeout(function () {
+                                triggerChangeCalling = false;
+                            }, 100);
+                            return;
+                        }
+                        var $this1 = $(this),
+                            value1 = $this1.val();
+                        if (!value1) {
+                            $this.MdPersianDateTimePicker('clearDate');
+                            return;
+                        }
+                        try {
+                            if (!setting.rangeSelector)
+                                $this.MdPersianDateTimePicker('setDate', parseDateTime(value1, setting));
+                            else {
+                                let dateValues = value1.split(' - ');
+                                $this.MdPersianDateTimePicker('setDateRange', parseDateTime(dateValues[0], setting), parseDateTime(dateValues[1], setting));
+                            }
+                        } catch (e) {
+                            setSelectedData(setting);
+                        }
+                    });
+                }
+            });
+        },
+        getText: function () {
+            return getSelectedDateTimeTextFormatted(getSetting2($(this)));
+        },
+        getDate: function () {
+            return getSetting2($(this)).selectedDate;
+        },
+        getDateRange: function () {
+            var setting = getSetting2($(this));
+            if (setting.rangeSelector) return [setting.rangeSelectorStartDate, setting.rangeSelectorEndDate];
+            if (!setting.toDate && !setting.fromDate || !setting.groupId) return [];
+            var fromDateSetting = getSetting2($('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-fromDate]')),
+                toDateSetting = getSetting2($('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-toDate]'));
+            return [fromDateSetting.selectedDate, toDateSetting.selectedDate];
+        },
+        setDate: function (dateTimeObject) {
+            if (dateTimeObject == undefined) throw new Error('MdPersianDateTimePicker => setDate => مقدار ورودی نا معتبر است');
+            var $this = $(this),
+                setting = getSetting2($this);
+            setting.selectedDate = getClonedDate(dateTimeObject);
+            setSetting2($this, setting);
+            setSelectedData(setting);
+        },
+        setOption: function (name, value) {
+            if (!name) throw new Error('MdPersianDateTimePicker => setOption => name parameter مقدار ورودی نا معتبر است');
+            var $this = $(this),
+                setting = getSetting2($this);
+            setting[name] = value;
+            setSetting2($this, setting);
+        },
+        setDateRange: function (startDateTimeObject, endDateTimeObject) {
+            if (startDateTimeObject == undefined || endDateTimeObject == undefined) throw new Error('MdPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است');
+            if (startDateTimeObject.getTime() >= endDateTimeObject.getTime()) throw new Error('MdPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است, تاریخ شروع باید بزرگتر از تاریخ پایان باشد');
+            var $this = $(this),
+                setting = getSetting2($this);
+            if (setting.rangeSelector) {
+                setting.selectedDate = startDateTimeObject;
+                setting.rangeSelectorStartDate = startDateTimeObject;
+                setting.rangeSelectorEndDate = endDateTimeObject;
+                setSetting2($this, setting);
+                setSelectedData(setting);
+            } else if ((setting.fromDate || setting.toDate) && setting.groupId) {
+                var $toDateElement = $('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-toDate]'),
+                    $fromDateElement = $('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-fromDate]');
+                if ($fromDateElement.length > 0) {
+                    var fromDateSetting = getSetting2($fromDateElement);
+                    fromDateSetting.selectedDate = startDateTimeObject;
+                    setSetting2($fromDateElement, fromDateSetting);
+                    setSelectedData(fromDateSetting);
+                }
+                if ($toDateElement.length > 0) {
+                    var toDateSetting = getSetting2($toDateElement);
+                    toDateSetting.selectedDate = endDateTimeObject;
+                    setSetting2($toDateElement, toDateSetting);
+                    setSelectedData(toDateSetting);
+                }
+            }
+        },
+        clearDate: function () {
+            var $this = $(this),
+                setting = getSetting2($this);
+            setting.selectedDate = undefined;
+            setSetting2($this, setting);
+            setSelectedData(setting);
+        },
+        setDatePersian: function (dateTimeObjectJson) {
+            if (dateTimeObjectJson == undefined) throw new Error('MdPersianDateTimePicker => setDatePersian => ورودی باید از نوه جی سان با حداقل پراپرتی های year, month, day باشد');
+            dateTimeObjectJson.hour = !dateTimeObjectJson.hour ? 0 : dateTimeObjectJson.hour;
+            dateTimeObjectJson.minute = !dateTimeObjectJson.hour ? 0 : dateTimeObjectJson.minute;
+            dateTimeObjectJson.second = !dateTimeObjectJson.second ? 0 : dateTimeObjectJson.second;
+            var $this = $(this),
+                setting = getSetting2($this);
+            setting.selectedDate = getDateTime2(dateTimeObjectJson);
+            setSetting2($this, setting);
+            setSelectedData(setting);
+        },
+        hide: function () {
+            hidePopover($(this));
+        },
+        show: function () {
+            var $this = $(this),
+                setting = getSetting2($this);
+            $(this).trigger(setting.trigger);
+        },
+        disable: function (isDisable) {
+            var $this = $(this),
+                setting = getSetting2($this);
+            setting.disabled = isDisable;
+            setSetting2($this, setting);
+            if (isDisable) $this.attr('disabled', '');
+            else $this.removeAttr('disabled');
+        },
+        changeType: function (isGregorian, englishNumber) {
+            var $this = $(this),
+                setting = getSetting2($this);
+            hidePopover($this);
+            setting.isGregorian = isGregorian;
+            setting.englishNumber = englishNumber;
+            if (setting.isGregorian) setting.englishNumber = true;
+            setSetting2($this, setting);
+            setSelectedData(setting);
+        }
+    };
+
+    $.fn.MdPersianDateTimePicker = function (method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' + method + ' does not exist in jquery.Bootstrap-PersianDateTimePicker');
+            return false;
+        }
+    };
+
+})(jQuery);
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJmaWxlIjoiYXouYm9vdHN0cmFwcGVyc2lhbmRhdGV0aW1lcGlja2VyLmpzIiwic291cmNlUm9vdCI6Ii8ifQ==
