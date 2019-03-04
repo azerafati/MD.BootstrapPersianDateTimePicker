@@ -18,7 +18,7 @@
 Originally forked from 
 [MD.BootstrapPersianDateTimePicker](https://github.com/Mds92/MD.BootstrapPersianDateTimePicker) with the intention of leaving Jalaali date conversion to it's respected libraries and adding AngularJS wrapper for it. 
 
-Using bootstrap's [Popovers](https://getbootstrap.com/docs/4.2/components/popovers/), `az.BootstrapPersianDateTimePicker` is very flexible and powerful.
+Using bootstrap's [Popovers](https://getbootstrap.com/docs/4.3/components/popovers/), `az.BootstrapPersianDateTimePicker` is very flexible and powerful.
 <hr>
 
 ## Dependencies:

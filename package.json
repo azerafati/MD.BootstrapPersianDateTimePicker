@@ -1,6 +1,6 @@
 {
   "name": "az.bootstrappersiandatetimepicker",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Persian Date Time Picker with jQuery 3+ & Bootstrap 4+",
   "license": "MIT",
   "moduleResolution": "node",
@@ -19,7 +19,7 @@
     "dist/*"
   ],
   "dependencies": {
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "jquery": "^3.3.1"
   },
   "devDependencies": {

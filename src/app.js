@@ -174,14 +174,14 @@
 
     // #region variables
 
-    var mdDatePickerFlag = 'data-mdpersiandatetimepicker',
+    var mdDatePickerFlag = 'data-azPersianDateTimePicker',
+        pluginName = 'mds-bootstrap-persian-datetime-picker-popover',
         mdDatePickerFlagSelector = '[' + mdDatePickerFlag + ']',
-        mdDatePickerGroupIdAttribute = 'data-mdpersiandatetimepicker-group',
-        mdDatePickerPopoverFlag = 'data-mdpersiandatetimepicker-popover',
-        mdDatePickerPopoverSelector = '[' + mdDatePickerPopoverFlag + ']',
-        mdDatePickerContainerFlag = 'data-mdpersiandatetimepicker-container',
-        mdDatePickerContainerSelector = '[' + mdDatePickerContainerFlag + ']',
-        mdPluginName = 'MdPersianDateTimePicker',
+        mdDatePickerGroupIdAttribute = 'data-azPersianDateTimePicker-group',
+        mdDatePickerPopoverFlag = 'data-azPersianDateTimePicker-popover',
+        mdDatePickerContainerFlag = 'data-azPersianDateTimePicker-container',
+        mdDatePickerContainerSelector = '.popover.' + pluginName,
+        mdPluginName = 'azPersianDateTimePicker',
         triggerStart = false;
 
     var popverHtmlTemplate = `
@@ -217,15 +217,43 @@
                     <tbody>
                     <tr>
                         <td>
-                            <input type="number" title="{{hourText}}" value="{{hour}}" maxlength="2" data-clock="hour"/>
+                            <div class="input-group input-group-sm">
+                              <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary caret btn-dec-hour" type="button" >
+                                    <svg class="r-90">
+                                        <use xlink:href="#svg-arrow-down"></use>
+                                    </svg>
+                                </button>
+                              </div>
+                              <input class="form-control" type="number" title="{{hourText}}" value="{{hour}}" maxlength="2" data-clock="hour">
+                               <div class="input-group-append">
+                                <button class="btn btn-outline-secondary caret btn-inc-hour" type="button" >
+                                    <svg class="r-270">
+                                        <use xlink:href="#svg-arrow-down"></use>
+                                    </svg>
+                                </button>
+                              </div>
+                            </div>
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="number" title="{{minuteText}}" value="{{minute}}" maxlength="2" data-clock="minute"/>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <input type="number" title="{{secondText}}" value="{{second}}" maxlength="2" data-clock="second"/>
+                            <div class="input-group input-group-sm">
+                              <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary caret btn-dec-min" type="button" >
+                                 <svg class="r-90">
+                                        <use xlink:href="#svg-arrow-down"></use>
+                                    </svg>
+                                </button>
+                              </div>
+                              <input class="form-control" type="number" title="{{minuteText}}" value="{{minute}}" maxlength="2" data-clock="minute">
+                               <div class="input-group-append">
+                                <button class="btn btn-outline-secondary caret btn-inc-min" type="button" >
+                                 <svg class="r-270">
+                                        <use xlink:href="#svg-arrow-down"></use>
+                                    </svg>
+                                </button>
+                              </div>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -239,7 +267,13 @@
         </tr>
         </tfoot>
     </table>
-</div>`;
+</div>
+<svg style="position:absolute;height: 0;overflow: hidden;">
+    <symbol viewBox="0 0 451.847 451.847" id="svg-arrow-down" xmlns="http://www.w3.org/2000/svg">
+        <path d="M225.923 354.706c-8.098 0-16.195-3.092-22.369-9.263L9.27 151.157c-12.359-12.359-12.359-32.397 0-44.751 12.354-12.354 32.388-12.354 44.748 0l171.905 171.915 171.906-171.909c12.359-12.354 32.391-12.354 44.744 0 12.365 12.354 12.365 32.392 0 44.751L248.292 345.449c-6.177 6.172-14.274 9.257-22.369 9.257z"/>
+    </symbol>
+</svg>
+`;
 
     var dateTimePickerMonthTableHtmlTemplate = `<td class="border-0" style="{{monthTdStyle}}" {{monthTdAttribute}} data-td-month>
     <table class="table table-sm table-striped table-borderless">
@@ -418,7 +452,7 @@
         var $popoverDescriber = $element.parents(mdDatePickerFlagSelector + ':first'); // inline
         // not inline
         if ($popoverDescriber.length <= 0) {
-            $popoverDescriber = $element.parents(mdDatePickerPopoverSelector + ':first');
+            $popoverDescriber = $element.parents('.' + pluginName + ':first');
             $popoverDescriber = $('[aria-describedby="' + $popoverDescriber.attr('id') + '"]');
         }
         return $popoverDescriber;
@@ -442,7 +476,7 @@
 
     function updateCalendarHtml1($element, setting) {
         var calendarHtml = getDateTimePickerHtml(setting),
-            $container = setting.inLine ? $element.parents(mdDatePickerFlagSelector + ':first') : $element.parents('[data-name="mds-datetimepicker-popoverbody"]:first');
+            $container = setting.inLine ? $element.parents(mdDatePickerFlagSelector + ':first') : $element.parents('.popover-body:first');
         $container.html(calendarHtml);
     }
 
@@ -606,7 +640,7 @@
     }
 
     function hideOthers($exceptThis) {
-        $(mdDatePickerPopoverSelector).each(function () {
+        $(mdDatePickerContainerSelector).each(function () {
             var $thisPopover = $(this);
             if (!$exceptThis && $exceptThis.is($thisPopover)) return;
             hidePopover($thisPopover);
@@ -1579,7 +1613,7 @@
             }
             setSetting1($this, setting);
             if (setting.rangeSelectorStartDate != undefined && setting.rangeSelectorEndDate != undefined) {
-                if (!setting.inLine) hidePopover($(mdDatePickerPopoverSelector));
+                if (!setting.inLine) hidePopover($(mdDatePickerContainerSelector));
                 else updateCalendarHtml1($this, setting);
             }
             return;
@@ -1593,7 +1627,7 @@
         }
         setSetting1($this, setting);
         setSelectedData(setting);
-        if (!setting.inLine) hidePopover($(mdDatePickerPopoverSelector));
+        if (!setting.inLine) hidePopover($(mdDatePickerContainerSelector));
         else updateCalendarHtml1($this, setting);
     });
 
@@ -1648,7 +1682,7 @@
     });
 
     // عوض کردن ساعت
-    $(document).on('blur', mdDatePickerContainerSelector + ' input[data-clock]', function () {
+    $(document).on('input', mdDatePickerContainerSelector + ' input[data-clock]', function () {
         var $this = $(this),
             $thisContainer = $this.parents(mdDatePickerContainerSelector + ':first'),
             $hour = $thisContainer.find('input[type="number"][data-clock="hour"]'),
@@ -1695,10 +1729,81 @@
         var $target = $(e.target),
             $popoverDescriber = getPopoverDescriber($target);
         if ($popoverDescriber.length >= 1) return;
-        hidePopover($(mdDatePickerPopoverSelector));
+        hidePopover($(mdDatePickerContainerSelector));
     });
 
     //#endregion
+
+    function setDate(dateTimeObject) {
+        if (dateTimeObject == undefined) throw new Error('azPersianDateTimePicker => setDate => مقدار ورودی نا معتبر است');
+        var $this = $(this),
+            setting = getSetting2($this);
+        setting.selectedDate = getClonedDate(dateTimeObject);
+        setSetting2($this, setting);
+        setSelectedData(setting);
+    }
+
+    function initButtons(baseObject, popover) {
+
+        popover.find('button.btn.btn-inc-hour').click(function () {
+            var date = getDate(baseObject);
+
+            date.setHours(date.getHours() === 23 ? 0 : date.getHours() + 1);
+            updateInputs($(this), date, baseObject);
+        });
+        popover.find('button.btn.btn-dec-hour').click(function () {
+            var date = getDate(baseObject);
+
+            date.setHours(date.getHours() === 0 ? 23 : date.getHours() - 1);
+            updateInputs($(this), date, baseObject);
+        });
+        popover.find('button.btn.btn-inc-min').click(function () {
+            var date = getDate(baseObject);
+
+            var min = date.getMinutes();
+            if (0 <= min && min < 15) {
+                min = 15;
+            } else if (15 <= min && min < 30) {
+                min = 30;
+            } else if (30 <= min && min < 45) {
+                min = 45;
+            } else if (45 <= min && min <= 59) {
+                min = 0;
+            }
+            date.setMinutes(min);
+            updateInputs($(this), date, baseObject);
+        });
+        popover.find('button.btn.btn-dec-min').click(function () {
+            var date = getDate(baseObject);
+            var min = date.getMinutes();
+            if (0 < min && min <= 15) {
+                min = 0;
+            } else if (15 < min && min <= 30) {
+                min = 15;
+            } else if (30 < min && min <= 45) {
+                min = 30;
+            } else if ((45 < min && min <= 59) || min === 0) {
+                min = 45;
+            }
+            date.setMinutes(min);
+            updateInputs($(this), date, baseObject);
+        });
+
+        function updateInputs($this, date, baseObject) {
+            $this.closest('tr').find('input.form-control[data-clock="minute"]').val(date.getMinutes());
+            $this.closest('tr').find('input.form-control[data-clock="hour"]').val(date.getHours());
+            baseObject.azPersianDateTimePicker('setDate', date);
+        }
+
+        function getDate(baseObject) {
+            var date = baseObject.azPersianDateTimePicker('getDate');
+            if (!date) {
+                baseObject.azPersianDateTimePicker('setDate', new Date());
+                date = baseObject.azPersianDateTimePicker('getDate');
+            }
+            return date;
+        }
+    }
 
     var methods = {
         init: function (options) {
@@ -1758,15 +1863,15 @@
                     else if (setting.fromDate) $this.attr('data-fromDate', '');
                 }
                 if (setting.isGregorian) setting.englishNumber = true;
-                if (setting.toDate && setting.fromDate) throw new Error(`MdPersianDateTimePicker => You can not set true 'toDate' and 'fromDate' together`);
-                if (!setting.groupId && (setting.toDate || setting.fromDate)) throw new Error(`MdPersianDateTimePicker => When you set 'toDate' or 'fromDate' true, you have to set 'groupId'`);
+                if (setting.toDate && setting.fromDate) throw new Error(`azPersianDateTimePicker => You can not set true 'toDate' and 'fromDate' together`);
+                if (!setting.groupId && (setting.toDate || setting.fromDate)) throw new Error(`azPersianDateTimePicker => When you set 'toDate' or 'fromDate' true, you have to set 'groupId'`);
                 if (setting.disable) $this.attr('disabled', '');
                 if (setting.enableTimePicker && !setting.textFormat) setting.textFormat = 'yyyy/MM/dd   HH:mm:ss';
                 else if (!setting.enableTimePicker && !setting.textFormat) setting.textFormat = 'yyyy/MM/dd';
                 if (setting.enableTimePicker && !setting.dateFormat) setting.dateFormat = 'yyyy/MM/dd   HH:mm:ss';
                 else if (!setting.enableTimePicker && !setting.dateFormat) setting.dateFormat = 'yyyy/MM/dd';
                 $this.data(mdPluginName, setting);
-                if (setting.selectedDate != undefined) {
+                if (setting.selectedDate !== undefined) {
                     setSelectedData(setting);
                     triggerChangeCalling = false;
                 }
@@ -1776,7 +1881,7 @@
                 } else {
                     $this.popover({
                         container: 'body',
-                        content: '',
+                        content: pluginName,
                         html: true,
                         placement: setting.placement,
                         title: ' ',
@@ -1793,10 +1898,12 @@
                             setting.selectedDateToShow = setting.selectedDate != undefined ? getClonedDate(setting.selectedDate) : new Date();
                             var calendarHtml = getDateTimePickerHtml(setting),
                                 selectedDateString = $(calendarHtml).find('[data-selecteddatestring]').text().trim();
-                            $('#' + $this.attr('aria-describedby')).find('[data-name="mds-datetimepicker-title"]').html(selectedDateString);
-                            $('#' + $this.attr('aria-describedby')).find('[data-name="mds-datetimepicker-popoverbody"]').html(calendarHtml);
+                            var popover = $('#' + $this.attr('aria-describedby'));
+                            popover.find('.popover-header').html(selectedDateString);
+                            popover.find('.popover-body').html(calendarHtml);
                             $this.popover('update');
                             triggerStart = false;
+                            initButtons($this, popover);
                         }, 10);
                     });
                 }
@@ -1811,21 +1918,23 @@
                         var $this1 = $(this),
                             value1 = $this1.val();
                         if (!value1) {
-                            $this.MdPersianDateTimePicker('clearDate');
+                            $this.azPersianDateTimePicker('clearDate');
                             return;
                         }
                         try {
                             if (!setting.rangeSelector)
-                                $this.MdPersianDateTimePicker('setDate', parseDateTime(value1, setting));
+                                $this.azPersianDateTimePicker('setDate', parseDateTime(value1, setting));
                             else {
                                 let dateValues = value1.split(' - ');
-                                $this.MdPersianDateTimePicker('setDateRange', parseDateTime(dateValues[0], setting), parseDateTime(dateValues[1], setting));
+                                $this.azPersianDateTimePicker('setDateRange', parseDateTime(dateValues[0], setting), parseDateTime(dateValues[1], setting));
                             }
                         } catch (e) {
                             setSelectedData(setting);
                         }
                     });
                 }
+
+
             });
         },
         getText: function () {
@@ -1842,24 +1951,17 @@
                 toDateSetting = getSetting2($('[' + mdDatePickerGroupIdAttribute + '="' + setting.groupId + '"][data-toDate]'));
             return [fromDateSetting.selectedDate, toDateSetting.selectedDate];
         },
-        setDate: function (dateTimeObject) {
-            if (dateTimeObject == undefined) throw new Error('MdPersianDateTimePicker => setDate => مقدار ورودی نا معتبر است');
-            var $this = $(this),
-                setting = getSetting2($this);
-            setting.selectedDate = getClonedDate(dateTimeObject);
-            setSetting2($this, setting);
-            setSelectedData(setting);
-        },
+        setDate: setDate,
         setOption: function (name, value) {
-            if (!name) throw new Error('MdPersianDateTimePicker => setOption => name parameter مقدار ورودی نا معتبر است');
+            if (!name) throw new Error('azPersianDateTimePicker => setOption => name parameter مقدار ورودی نا معتبر است');
             var $this = $(this),
                 setting = getSetting2($this);
             setting[name] = value;
             setSetting2($this, setting);
         },
         setDateRange: function (startDateTimeObject, endDateTimeObject) {
-            if (startDateTimeObject == undefined || endDateTimeObject == undefined) throw new Error('MdPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است');
-            if (startDateTimeObject.getTime() >= endDateTimeObject.getTime()) throw new Error('MdPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است, تاریخ شروع باید بزرگتر از تاریخ پایان باشد');
+            if (startDateTimeObject == undefined || endDateTimeObject == undefined) throw new Error('azPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است');
+            if (startDateTimeObject.getTime() >= endDateTimeObject.getTime()) throw new Error('azPersianDateTimePicker => setDateRange => مقدار ورودی نا معتبر است, تاریخ شروع باید بزرگتر از تاریخ پایان باشد');
             var $this = $(this),
                 setting = getSetting2($this);
             if (setting.rangeSelector) {
@@ -1893,7 +1995,7 @@
             setSelectedData(setting);
         },
         setDatePersian: function (dateTimeObjectJson) {
-            if (dateTimeObjectJson == undefined) throw new Error('MdPersianDateTimePicker => setDatePersian => ورودی باید از نوه جی سان با حداقل پراپرتی های year, month, day باشد');
+            if (dateTimeObjectJson == undefined) throw new Error('azPersianDateTimePicker => setDatePersian => ورودی باید از نوه جی سان با حداقل پراپرتی های year, month, day باشد');
             dateTimeObjectJson.hour = !dateTimeObjectJson.hour ? 0 : dateTimeObjectJson.hour;
             dateTimeObjectJson.minute = !dateTimeObjectJson.hour ? 0 : dateTimeObjectJson.minute;
             dateTimeObjectJson.second = !dateTimeObjectJson.second ? 0 : dateTimeObjectJson.second;
@@ -1931,7 +2033,7 @@
         }
     };
 
-    $.fn.MdPersianDateTimePicker = function (method) {
+    $.fn.azPersianDateTimePicker = function (method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
