@@ -144,4 +144,4 @@ $('#date1').on('hidden.bs.popover', function () {
 ```
 ---
 Originally forked from 
-[MD.BootstrapPersianDateTimePicker](https://github.com/Mds92/MD.BootstrapPersianDateTimePicker) with the intention of leaving Jalaali date conversion to it's respected libraries and adding AngularJS wrapper for it plus some minor performance and appearance tweaks. 
+[MD.BootstrapPersianDateTimePicker](https://github.azerafati.com/az.BootstrapPersianDateTimePicker/) with the intention of leaving Jalaali date conversion to it's respected libraries and adding AngularJS wrapper for it plus some minor performance and appearance tweaks. 
