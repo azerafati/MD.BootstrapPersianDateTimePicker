@@ -15,6 +15,8 @@
 # az.BootstrapPersianDateTimePicker
 #### Bootstrap 4+ Persian And Gregorian Date Time Picker jQuery 3+ Plugin + AngularJS Wrapper
 
+[CHECK OUT THE DEMO HERE](http://az.bootstrappersiandatetimepicker.github.io/)
+
 Originally forked from 
 [MD.BootstrapPersianDateTimePicker](https://github.com/Mds92/MD.BootstrapPersianDateTimePicker) with the intention of leaving Jalaali date conversion to it's respected libraries and adding AngularJS wrapper for it. 
 
