@@ -1,3 +1,6 @@
+# az.BootstrapPersianDateTimePicker
+
+
 
 [![Build Status](https://api.travis-ci.org/azerafati/az.BootstrapPersianDateTimePicker.svg?branch=master)](https://travis-ci.org/azerafati/az.BootstrapPersianDateTimePicker)
 [![npm version](https://img.shields.io/npm/v/az.bootstrappersiandatetimepicker.svg)](https://www.npmjs.com/package/az.bootstrappersiandatetimepicker)
@@ -5,20 +8,22 @@
 [![Dependencies Status](https://img.shields.io/david/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://david-dm.org/azerafati/az.BootstrapPersianDateTimePicker?type=peer)
 [![devDependency Status](https://img.shields.io/david/dev/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://david-dm.org/azerafati/az.BootstrapPersianDateTimePicker?type=dev)
 [![Coverage Status](https://coveralls.io/repos/github/azerafati/az.BootstrapPersianDateTimePicker/badge.svg?branch=master-bs4)](https://coveralls.io/github/azerafati/az.BootstrapPersianDateTimePicker?branch=master-bs4)
-[![CSS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css?compression=gzip&label=CSS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css)
-[![JS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js?compression=gzip&label=JS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js)
 [![License](https://img.shields.io/github/license/azerafati/az.BootstrapPersianDateTimePicker.svg)](#license)
 
 
-
-
-# az.BootstrapPersianDateTimePicker
-#### Bootstrap 4+ Persian And Gregorian Date Time Picker jQuery 3+ Plugin + AngularJS Wrapper
-
+#### Persian And Gregorian Date Time Picker
 [CHECK OUT THE DEMO HERE](https://github.azerafati.com/az.BootstrapPersianDateTimePicker/)
 
 
-Using bootstrap's [Popovers](https://getbootstrap.com/docs/4.3/components/popovers/), `az.BootstrapPersianDateTimePicker` is very flexible and powerful.
+This date-time picker is:
+ - Responsive thanks to bootstrap's [Popovers](https://getbootstrap.com/docs/4.3/components/popovers/)
+ - Powerful thanks to [Moment.js](https://momentjs.com/)
+ - Accurate Jalaali calendar thanks to [moment-jalaali](https://github.com/jalaali/moment-jalaali)
+ - Minimal 
+ [![CSS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css?compression=gzip&label=CSS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css)
+ [![JS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js?compression=gzip&label=JS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js)
+
+ 
 <hr>
 
 ## Dependencies:
@@ -34,12 +39,11 @@ Using bootstrap's [Popovers](https://getbootstrap.com/docs/4.3/components/popove
 npm install az.bootstrappersiandatetimepicker
 ```
 
-Now add these to your html:
+Now add these to your html:****
 ```html
-<link href="/dist/az.bootstrappersiandatetimepicker.css" rel="stylesheet"/>
-<script src="/dist/az.bootstrappersiandatetimepicker.js"></script>
+<link href="/node_modules/az.bootstrappersiandatetimepicker/dist/az.bootstrappersiandatetimepicker.css" rel="stylesheet"/>
+<script src="/node_modules/az.bootstrappersiandatetimepicker/dist/az.bootstrappersiandatetimepicker.js"></script>
 ```
-### API:
 ```javascript
 $('#id').azPersianDateTimePicker({ 
   targetTextSelector: $('#inputTextDate1'),
