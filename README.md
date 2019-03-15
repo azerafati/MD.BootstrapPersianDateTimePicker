@@ -7,7 +7,7 @@
 [![Issues](https://img.shields.io/github/issues/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/issues)
 [![Dependencies Status](https://img.shields.io/david/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://david-dm.org/azerafati/az.BootstrapPersianDateTimePicker?type=peer)
 [![devDependency Status](https://img.shields.io/david/dev/azerafati/az.BootstrapPersianDateTimePicker.svg)](https://david-dm.org/azerafati/az.BootstrapPersianDateTimePicker?type=dev)
-[![Coverage Status](https://coveralls.io/repos/github/azerafati/az.BootstrapPersianDateTimePicker/badge.svg?branch=master-bs4)](https://coveralls.io/github/azerafati/az.BootstrapPersianDateTimePicker?branch=master-bs4)
+[![Coverage Status](https://coveralls.io/repos/github/azerafati/az.BootstrapPersianDateTimePicker/badge.svg?branch=master)](https://coveralls.io/github/azerafati/az.BootstrapPersianDateTimePicker?branch=master)
 [![License](https://img.shields.io/github/license/azerafati/az.BootstrapPersianDateTimePicker.svg)](#license)
 
 
@@ -15,13 +15,13 @@
 [CHECK OUT THE DEMO HERE](https://github.azerafati.com/az.BootstrapPersianDateTimePicker/)
 
 
-This date-time picker is:
- - Responsive thanks to bootstrap's [Popovers](https://getbootstrap.com/docs/4.3/components/popovers/)
+This date-time picker is
+ - Responsive and smart-positioned thanks to bootstrap's [Popovers](https://getbootstrap.com/docs/4.3/components/popovers/)
  - Powerful thanks to [Moment.js](https://momentjs.com/)
  - Accurate Jalaali calendar thanks to [moment-jalaali](https://github.com/jalaali/moment-jalaali)
  - Minimal 
- [![CSS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css?compression=gzip&label=CSS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.css)
- [![JS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js?compression=gzip&label=JS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master-bs4/dist/az.bootstrappersiandatetimepicker.js)
+ [![CSS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master/dist/az.bootstrappersiandatetimepicker.css?compression=gzip&label=CSS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master/dist/az.bootstrappersiandatetimepicker.css)
+ [![JS gzip size](https://img.badgesize.io/azerafati/az.BootstrapPersianDateTimePicker/master/dist/az.bootstrappersiandatetimepicker.js?compression=gzip&label=JS+gzip+size)](https://github.com/azerafati/az.BootstrapPersianDateTimePicker/master/dist/az.bootstrappersiandatetimepicker.js)
 
  
 <hr>
@@ -39,15 +39,15 @@ This date-time picker is:
 npm install az.bootstrappersiandatetimepicker
 ```
 
-Now add these to your html:****
+Now add these to your html:
 ```html
 <link href="/node_modules/az.bootstrappersiandatetimepicker/dist/az.bootstrappersiandatetimepicker.css" rel="stylesheet"/>
 <script src="/node_modules/az.bootstrappersiandatetimepicker/dist/az.bootstrappersiandatetimepicker.js"></script>
 ```
 ```javascript
 $('#id').azPersianDateTimePicker({ 
-  targetTextSelector: $('#inputTextDate1'),
-  targetDateSelector: $('#inputHiddenDate1'),
+  targetTextSelector: $('#inputDateVisible'),
+  targetDateSelector: $('#inputDateHidden'),
 });
 ```
 
@@ -114,24 +114,24 @@ Format | English Description | Persian Description
 
 Name | Return | Description | Sample
 ------------- | ------------- | ------------- |-------------
-**getText** | string | Get selected date text | $('#id').MdPersianDateTimePicker('getText');
-**getDate** | Date | Get selected date | $('#id').MdPersianDateTimePicker('getDate');
-**getDateRange** | [fromDate, toDate]: Date[] | Get selected date range | $('#id').MdPersianDateTimePicker('getDateRange');
-**setDate** | void | Set selected datetime with Date object argument | $('#id').MdPersianDateTimePicker('setDate', new Date(2018, 11, 12));
-**setDateRange** | void | Set selected datetime range with Date object argument | $('#id').MdPersianDateTimePicker('setDateRange', new Date(2018, 11, 01), new Date(2018, 11, 12));
-**clearDate** | void | clear selected date | $('#id').MdPersianDateTimePicker('clearDate');
-**setDatePersian** | void | Set selected datetime with persian json argument | $('#id').MdPersianDateTimePicker('setDatePersian', {year: 1397, month: 1, day: 1, hour: 0, minute: 0, second: 0});
-**hide** | void | Hide date time picker | $('#id').MdPersianDateTimePicker('hide');
-**show** | void | Show date time picker | $('#id').MdPersianDateTimePicker('show');
-**disable** | void | Disable or enable date time picker | $('#id').MdPersianDateTimePicker('disable', /*isDisable*/ true);
-**changeType** | void | Switch between Persian or Gregorian calendar | $('#id').MdPersianDateTimePicker('changeType', /*isGregorian*/ true, /* englishNumber */ true);
-**setOption** | void | Set an option | $('#id').MdPersianDateTimePicker('setOption', 'yearOffset', 5);
+**getText** | string | Get selected date text | $('#id').azPersianDateTimePicker('getText');
+**getDate** | Date | Get selected date | $('#id').azPersianDateTimePicker('getDate');
+**getDateRange** | [fromDate, toDate]: Date[] | Get selected date range | $('#id').azPersianDateTimePicker('getDateRange');
+**setDate** | void | Set selected datetime with Date object argument | $('#id').azPersianDateTimePicker('setDate', new Date(2018, 11, 12));
+**setDateRange** | void | Set selected datetime range with Date object argument | $('#id').azPersianDateTimePicker('setDateRange', new Date(2018, 11, 01), new Date(2018, 11, 12));
+**clearDate** | void | clear selected date | $('#id').azPersianDateTimePicker('clearDate');
+**setDatePersian** | void | Set selected datetime with persian json argument | $('#id').azPersianDateTimePicker('setDatePersian', {year: 1397, month: 1, day: 1, hour: 0, minute: 0, second: 0});
+**hide** | void | Hide date time picker | $('#id').azPersianDateTimePicker('hide');
+**show** | void | Show date time picker | $('#id').azPersianDateTimePicker('show');
+**disable** | void | Disable or enable date time picker | $('#id').azPersianDateTimePicker('disable', /*isDisable*/ true);
+**changeType** | void | Switch between Persian or Gregorian calendar | $('#id').azPersianDateTimePicker('changeType', /*isGregorian*/ true, /* englishNumber */ true);
+**setOption** | void | Set an option | $('#id').azPersianDateTimePicker('setOption', 'yearOffset', 5);
 
 <hr>
 
 ### Events:
 
-`MD.BootstrapPersianDateTimePicker` uses Bootstrap's popover, so you can use `popover` events.
+`az.BootstrapPersianDateTimePicker` uses Bootstrap's popover, so you can use `popover` events.
 
 Event Type | Description
 ------------- | -------------
