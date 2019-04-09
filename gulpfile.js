@@ -15,6 +15,7 @@ const composer = require('gulp-uglify/composer');
 const minifyes = composer(uglifyes, console);
 const fs = require('fs');
 const replace = require('gulp-replace');
+const babel = require('gulp-babel');
 
 
 const distributionDir = 'dist/';
@@ -45,6 +46,7 @@ gulp.task('javascript', function (done) {
         .pipe(sourcemaps.init())
         .pipe(concat(package.name + ".js"))
         .on('error', logError)
+        .pipe(babel({presets: ['@babel/env']}))
         .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/'}))
         .pipe(gulp.dest(distributionDir));
 });

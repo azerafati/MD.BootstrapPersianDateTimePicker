@@ -1,6 +1,6 @@
 {
   "name": "az.bootstrappersiandatetimepicker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Persian Date Time Picker with jQuery 3+ & Bootstrap 4+",
   "license": "MIT",
   "moduleResolution": "node",
@@ -35,7 +35,11 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "gulp-babel": "^8.0.0",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-preset-es2015": "^6.24.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
