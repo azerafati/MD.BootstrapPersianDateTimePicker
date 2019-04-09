@@ -356,7 +356,7 @@
 </td>
     `;
 
-    triggerChangeCalling = false;
+    var triggerChangeCalling = false;
     var previousYearTextPersian = 'سال قبل',
         previousMonthTextPersian = 'ماه قبل',
         nextYearTextPersian = 'سال بعد',
@@ -1254,7 +1254,7 @@
             firstWeekDayNumber = new Date(dateTimeToShowJson.year, dateTimeToShowJson.month - 1, 1).getDay();
             selectedDateNumber = !selectedDateTime ? 0 : convertToNumber1(getDateTimeJson1(selectedDateTime));
             numberOfDaysInCurrentMonth = getDaysInMonth(dateTimeToShowJson.year, dateTimeToShowJson.month - 1);
-            numberOfDaysInPreviousMonth = getDaysInMonth(dateTimeToShowJson.year, dateTimeToShowJson.month - 2);
+            var numberOfDaysInPreviousMonth = getDaysInMonth(dateTimeToShowJson.year, dateTimeToShowJson.month - 2);
             previousMonthDateNumber = convertToNumber1(getDateTimeJson1(getLastDayDateOfPreviousMonth(selectedDateToShowTemp, true)));
             nextMonthDateNumber = convertToNumber1(getDateTimeJson1(getFirstDayDateOfNextMonth(selectedDateToShowTemp, true)));
             selectedDateToShowTemp = getClonedDate(selectedDateToShow);
@@ -1361,7 +1361,7 @@
                 if (tdNumber >= 7) {
                     tdNumber = 0;
                     daysHtml += $tr[0].outerHTML;
-                    isTrAppended = true;
+                    var isTrAppended = true;
                     $tr = $('<tr />');
                 }
             }
